@@ -24,7 +24,7 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
-	public Board play(final Move move) {
+	public StandardBoard play(final Move move) {
 		final Piece toMove = pieceAt(move.from);
 		final List<Piece> newPieces = new ArrayList<>(pieces);
 		newPieces.remove(toMove);
