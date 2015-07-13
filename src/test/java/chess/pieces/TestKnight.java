@@ -14,6 +14,13 @@ public class TestKnight {
 	private final Board emptyBoard = new StandardBoard();
 
 	@Test
+	public void moveIllegalIfDestinationOccupiedByFriendlyPiece() {
+		final Knight knight = new Knight(BLACK, new Position(1, 1));
+		final Board board = new StandardBoard(knight, new Pawn(BLACK, position(2,  3)));
+		assertThat(knight.moveIsIllegal(position(2, 3), board), equalTo(true));
+	}
+
+	@Test
 	public void doesntMoveIfIllegal() {
 		final Knight knight = new Knight(BLACK, new Position(1, 1));
 

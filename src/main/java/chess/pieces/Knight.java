@@ -24,6 +24,9 @@ public class Knight implements Piece {
 
 	@Override
 	public boolean moveIsIllegal(final Position position, final Board board) {
+		if (board.isOccupiedBy(colour, position)) {
+			return true;
+		}
 		return ! ((columnDifference(position) == 2) & (rowDifference(position) == 1)
 				| (columnDifference(position) == 1) & (rowDifference(position) == 2));
 	}
