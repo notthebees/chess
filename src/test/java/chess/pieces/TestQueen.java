@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import static chess.pieces.Colour.BLACK;
+import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -12,6 +13,27 @@ import chess.StandardBoard;
 public class TestQueen {
 
 	private final Board emptyBoard = new StandardBoard();
+
+	@Test
+	public void moveIllegalIfPathObstructedByAnyPiece() {
+		final Queen queen = new Queen(BLACK, new Position(4, 4));
+		final Board board = new StandardBoard(
+				queen,
+				new Pawn(BLACK, position(5,  4)),
+				new Pawn(BLACK, position(5,  5)),
+				new Pawn(WHITE, position(4,  2)));
+
+		assertThat(queen.moveIsIllegal(position(7, 4), board), equalTo(true));
+		assertThat(queen.moveIsIllegal(position(7, 7), board), equalTo(true));
+		assertThat(queen.moveIsIllegal(position(4, 1), board), equalTo(true));
+	}
+
+	@Test
+	public void moveIllegalIfDestinationOccupiedByFriendlyPiece() {
+		final Queen queen = new Queen(BLACK, new Position(1, 1));
+		final Board board = new StandardBoard(queen, new Pawn(BLACK, position(3,  1)));
+		assertThat(queen.moveIsIllegal(position(3, 1), board), equalTo(true));
+	}
 
 	@Test
 	public void doesntMoveIfIllegal() {

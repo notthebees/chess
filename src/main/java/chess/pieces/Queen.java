@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.signum;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -24,7 +25,26 @@ public class Queen implements Piece {
 
 	@Override
 	public boolean moveIsIllegal(final Position position, final Board board) {
-		return ! (diagonalMove(position) | verticalMove(position) | horizontalMove(position));
+		if (! (diagonalMove(position) | verticalMove(position) | horizontalMove(position))) {
+			return true;
+		}
+		if (board.isOccupiedBy(colour, position)) {
+			return true;
+		}
+		if (routeIsNotClear(position, board)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean routeIsNotClear(final Position destination, final Board board) {
+		if (verticalMove(destination)) {
+			return verticalRouteIsNotClear(destination, board);
+		} else if (horizontalMove(destination)) {
+			return horizontalRouteIsNotClear(destination, board);
+		} else {
+			return diagonalRouteIsNotClear(destination, board);
+		}
 	}
 
 	private boolean horizontalMove(final Position position) {
@@ -37,6 +57,41 @@ public class Queen implements Piece {
 
 	private boolean diagonalMove(final Position position) {
 		return abs(position.row - this.position.row) == abs(position.column - this.position.column);
+	}
+
+	private boolean horizontalRouteIsNotClear(final Position destination, final Board board) {
+		final int columnSign = (int) signum(destination.column - position.column);
+		for (int i = 1; i < abs(destination.column - position.column); i++) {
+			final Position positionOnRoute = new Position(position.column + i*columnSign, position.row);
+			if (board.isOccupiedAt(positionOnRoute)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean verticalRouteIsNotClear(final Position destination, final Board board) {
+		final int rowSign = (int) signum(destination.row - position.row);
+		for (int i = 1; i < abs(destination.row - position.row); i++) {
+			final Position positionOnRoute = new Position(position.column, position.row + i*rowSign);
+			if (board.isOccupiedAt(positionOnRoute)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean diagonalRouteIsNotClear(final Position destination, final Board board) {
+		final int columnSign = (int) signum(destination.column - position.column);
+		final int rowSign = (int) signum(destination.row - position.row);
+
+		for (int i = 1; i < abs(destination.column - position.column); i++) {
+			final Position positionOnRoute = new Position(position.column + i*columnSign, position.row + i*rowSign);
+			if (board.isOccupiedAt(positionOnRoute)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
