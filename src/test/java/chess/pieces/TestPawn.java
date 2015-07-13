@@ -15,9 +15,28 @@ public class TestPawn {
 	private final Board emptyBoard = new StandardBoard();
 
 	@Test
+	public void canMoveTwoSpacesOffStartingSquare() {
+		final Pawn whitePawn = new Pawn(WHITE, position(1, 2));
+		final Pawn blackPawn = new Pawn(BLACK, position(1, 7));
+		final Pawn movedWhitePawn = new Pawn(WHITE, position(2, 3));
+
+		assertThat(whitePawn.moveIsIllegal(position(1, 4), emptyBoard), equalTo(false));
+		assertThat(blackPawn.moveIsIllegal(position(1, 5), emptyBoard), equalTo(false));
+		assertThat(movedWhitePawn.moveIsIllegal(position(2, 5), emptyBoard), equalTo(true));
+
+		final Board board = new StandardBoard(whitePawn, new Pawn(BLACK, position(1, 3)));
+		assertThat(whitePawn.moveIsIllegal(position(1, 4), board), equalTo(true));
+	}
+
+	@Test
 	public void moveDiagonallyToCapture() {
 		final Pawn pawn = new Pawn(WHITE, new Position(1, 2));
-		final Board board = new StandardBoard(pawn, new Pawn(BLACK, position(2, 3)));
+		final Board board = new StandardBoard(
+				pawn,
+				new Pawn(BLACK, position(1, 3)),
+				new Pawn(BLACK, position(2, 3)));
+
+		assertThat(pawn.moveIsIllegal(position(1, 3), board), equalTo(true));
 		assertThat(pawn.moveIsIllegal(position(2, 3), board), equalTo(false));
 	}
 

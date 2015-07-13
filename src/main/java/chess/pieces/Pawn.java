@@ -29,13 +29,13 @@ public class Pawn implements Piece{
 			return true;
 		}
 		if (board.isOccupiedAt(destination)) {
-			return ! capturingMove(destination);
+			return ! legitimateCapturingMove(destination);
 		}
 
-		return ! oneStepForward(destination);
+		return ! legitimateAdvancingMove(destination, board);
 	}
 
-	private boolean capturingMove(final Position destination) {
+	private boolean legitimateCapturingMove(final Position destination) {
 		return (oneStepSideways(destination)
 				& forwardOneStep(destination));
 	}
@@ -44,9 +44,41 @@ public class Pawn implements Piece{
 		return abs(destination.column - position.column) == 1;
 	}
 
-	private boolean oneStepForward(final Position destination) {
-		return (columnStaysTheSame(destination)
-				& forwardOneStep(destination));
+	private boolean legitimateAdvancingMove(final Position destination, final Board board) {
+		if (! columnStaysTheSame(destination)) {
+			return false;
+		}
+		if (forwardOneStep(destination)) {
+			return true;
+		}
+		if (forwardTwoSteps(destination)) {
+			return onStartingSquare() & ! board.isOccupiedAt(spaceInFront());
+		}
+		return false;
+	}
+
+	private boolean onStartingSquare() {
+		if (colour.equals(WHITE)) {
+			return position.row == 2;
+		} else {
+			return position.row == 7;
+		}
+	}
+
+	private Position spaceInFront() {
+		if (colour.equals(WHITE)) {
+			return new Position(position.column, position.row + 1);
+		} else {
+			return new Position(position.column, position.row - 1);
+		}
+	}
+
+	private boolean forwardTwoSteps(final Position destination) {
+		if (colour.equals(WHITE)) {
+			return destination.row == position.row + 2;
+		} else {
+			return destination.row == position.row - 2;
+		}
 	}
 
 	private boolean forwardOneStep(final Position destination) {
