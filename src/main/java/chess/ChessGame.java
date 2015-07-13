@@ -1,6 +1,5 @@
 package chess;
 
-import chess.pieces.Position;
 
 public class ChessGame implements Game {
 
@@ -10,8 +9,8 @@ public class ChessGame implements Game {
 		currentBoard = board;
 	}
 
-	public void play(final Position from, final Position to) {
-		currentBoard = currentBoard.move(from, to);
+	public void play(final Move move) {
+		currentBoard = currentBoard.play(move);
 	}
 
 	public Board currentBoard() {

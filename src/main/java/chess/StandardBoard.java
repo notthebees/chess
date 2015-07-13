@@ -7,7 +7,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import chess.pieces.Piece;
-import chess.pieces.Position;
 
 public class StandardBoard implements Board {
 
@@ -20,8 +19,7 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
-	public Board move(final Position from, final Position to) {
-		// TODO Auto-generated method stub
+	public Board play(final Move move) {
 		return null;
 	}
 

@@ -10,8 +10,8 @@ import org.junit.Test;
 import chess.Board;
 import chess.ChessGame;
 import chess.Game;
+import chess.Move;
 import chess.StandardBoard;
-import chess.pieces.Colour;
 import chess.pieces.King;
 import chess.pieces.Piece;
 import chess.pieces.Position;
@@ -20,21 +20,25 @@ public class TestIntegration {
 
 	@Test
 	public void twoPlayersTakeTurnsMovingKings() {
-		final Piece whiteKing = new King(WHITE, new Position(5, 1));
-		final Piece blackKing = new King(BLACK, new Position(4, 8));
+		final Piece whiteKing = new King(WHITE, position(5, 1));
+		final Piece blackKing = new King(BLACK, position(4, 8));
 
 		final Board board = new StandardBoard(whiteKing, blackKing);
 
 		final Game game = new ChessGame(board);
 
-		game.play(new Position(5,1), new Position(6,2));
-		game.play(new Position(4,8), new Position(5,8));
+		game.play(new Move(position(5, 1), position(6, 2)));
+		game.play(new Move(position(4, 8), position(5, 8)));
 
 		final Board finalBoard = new StandardBoard(
-				new King(Colour.WHITE, new Position(6, 2)),
-				new King(Colour.BLACK, new Position(5, 8)));
+				new King(WHITE, position(6, 2)),
+				new King(BLACK, position(5, 8)));
 
 		assertThat(game.currentBoard(), equalTo(finalBoard));
+	}
+
+	private Position position(final int column, final int row) {
+		return new Position(column, row);
 	}
 
 }
