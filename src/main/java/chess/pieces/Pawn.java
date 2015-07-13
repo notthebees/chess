@@ -1,5 +1,7 @@
 package chess.pieces;
 
+import static chess.pieces.Colour.WHITE;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -30,8 +32,20 @@ public class Pawn implements Piece{
 	}
 
 	private boolean oneStepForward(final Position destination) {
-		return ((destination.column == position.column)
-				& (destination.row == position.row + 1));
+		return (columnStaysTheSame(destination)
+				& forwardOneStep(destination));
+	}
+
+	private boolean forwardOneStep(final Position destination) {
+		if (colour.equals(WHITE)) {
+			return destination.row == position.row + 1;
+		} else {
+			return destination.row == position.row - 1;
+		}
+	}
+
+	private boolean columnStaysTheSame(final Position destination) {
+		return destination.column == position.column;
 	}
 
 	@Override
