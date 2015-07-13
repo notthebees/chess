@@ -39,10 +39,10 @@ public class Bishop implements Piece {
 
 	private boolean routeIsNotClear(final Position destination, final Board board) {
 		final int columnSign = (int) signum(destination.column - position.column);
-		final int rowDifference = (int) signum(destination.row - position.row);
+		final int rowSign = (int) signum(destination.row - position.row);
 
 		for (int i = 1; i < columnDistance(destination); i++) {
-			final Position positionOnRoute = new Position(position.column + i*columnSign, position.row + i*rowDifference);
+			final Position positionOnRoute = new Position(position.column + i*columnSign, position.row + i*rowSign);
 			if (board.isOccupiedAt(positionOnRoute)) {
 				return true;
 			}
