@@ -1,7 +1,9 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -11,7 +13,7 @@ import chess.pieces.Position;
 
 public class StandardBoard implements Board {
 
-	private final List<Piece> pieces = new ArrayList<>();
+	private final Set<Piece> pieces = new HashSet<>();
 
 	public StandardBoard(final List<Piece> pieces) {
 		this.pieces.addAll(pieces);
