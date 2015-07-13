@@ -5,6 +5,6 @@ public interface Piece {
 
 	Colour colour();
 	Position position();
-	boolean canMoveTo(Position position);
+	Piece moveTo(Position position);
 
 }

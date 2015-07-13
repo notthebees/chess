@@ -9,23 +9,23 @@ import org.junit.Test;
 public class TestKing {
 
 	@Test
-	public void testIllegalMoves() {
+	public void doesntMoveIfIllegal() {
 		final King king = new King(BLACK, new Position(1, 1));
 
-		assertThat(king.canMoveTo(position(1, 3)), equalTo(false));
-		assertThat(king.canMoveTo(position(-1, 2)), equalTo(false));
-		assertThat(king.canMoveTo(position(5, 0)), equalTo(false));
-		assertThat(king.canMoveTo(position(1, 1)), equalTo(false));
+		assertThat(king.moveTo(position(1, 3)), equalTo(king));
+		assertThat(king.moveTo(position(-1, 2)), equalTo(king));
+		assertThat(king.moveTo(position(5, 0)), equalTo(king));
+		assertThat(king.moveTo(position(1, 1)), equalTo(king));
 	}
 
 	@Test
-	public void testLegalMoves() {
+	public void movesIfLegal() {
 		final King king = new King(BLACK, new Position(1, 1));
 
-		assertThat(king.canMoveTo(position(1, 2)), equalTo(true));
-		assertThat(king.canMoveTo(position(2, 2)), equalTo(true));
-		assertThat(king.canMoveTo(position(1, 0)), equalTo(true));
-		assertThat(king.canMoveTo(position(2, 1)), equalTo(true));
+		assertThat(king.moveTo(position(1, 2)), equalTo(new King(BLACK, position(1, 2))));
+		assertThat(king.moveTo(position(2, 2)), equalTo(new King(BLACK, position(2, 2))));
+		assertThat(king.moveTo(position(1, 0)), equalTo(new King(BLACK, position(1, 0))));
+		assertThat(king.moveTo(position(2, 1)), equalTo(new King(BLACK, position(2, 1))));
 	}
 
 	private Position position(final int column, final int row) {

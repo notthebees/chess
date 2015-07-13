@@ -16,7 +16,14 @@ public class King implements Piece {
 	}
 
 	@Override
-	public boolean canMoveTo(final Position position) {
+	public King moveTo(final Position position) {
+		if (canMoveTo(position)) {
+			return new King(colour, position);
+		}
+		return this;
+	}
+
+	private boolean canMoveTo(final Position position) {
 		return ! (noMove(position) | columnTooFar(position) | rowTooFar(position));
 	}
 
