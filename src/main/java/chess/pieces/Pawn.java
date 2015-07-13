@@ -21,9 +21,17 @@ public class Pawn implements Piece{
 	}
 
 	@Override
-	public boolean moveIsIllegal(final Position position, final Board board) {
-		return ! ((position.column == this.position.column)
-				& (position.row == this.position.row + 1));
+	public boolean moveIsIllegal(final Position destination, final Board board) {
+		if (board.isOccupiedBy(colour, position)) {
+			return true;
+		}
+
+		return ! oneStepForward(destination);
+	}
+
+	private boolean oneStepForward(final Position destination) {
+		return ((destination.column == position.column)
+				& (destination.row == position.row + 1));
 	}
 
 	@Override

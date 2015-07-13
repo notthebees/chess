@@ -14,10 +14,27 @@ public class TestPawn {
 	private final Board emptyBoard = new StandardBoard();
 
 	@Test
-	public void basicMoveLegality() {
-		final Pawn pawn = new Pawn(BLACK, new Position(2, 1));
+	public void moveIllegalIfDestinationOccupiedByFriendlyPiece() {
+		final Pawn pawn = new Pawn(BLACK, new Position(1, 2));
+		final Board board = new StandardBoard(pawn, new Pawn(BLACK, position(1, 3)));
+		assertThat(pawn.moveIsIllegal(position(1, 3), board), equalTo(true));
+	}
 
-		assertThat(pawn.moveIsIllegal(position(2, 2), emptyBoard), equalTo(false));
+	@Test
+	public void someIllegalMoves() {
+		final Pawn pawn = new Pawn(BLACK, new Position(1, 2));
+
+		assertThat(pawn.moveIsIllegal(position(2, 2), emptyBoard), equalTo(true));
+		assertThat(pawn.moveIsIllegal(position(2, 3), emptyBoard), equalTo(true));
+		assertThat(pawn.moveIsIllegal(position(1, 5), emptyBoard), equalTo(true));
+		assertThat(pawn.moveIsIllegal(position(1, 1), emptyBoard), equalTo(true));
+	}
+
+	@Test
+	public void basicMoveLegality() {
+		final Pawn pawn = new Pawn(BLACK, new Position(1, 2));
+
+		assertThat(pawn.moveIsIllegal(position(1, 3), emptyBoard), equalTo(false));
 	}
 
 	private Position position(final int column, final int row) {
