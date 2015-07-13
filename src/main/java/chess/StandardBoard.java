@@ -34,18 +34,7 @@ public class StandardBoard implements Board {
 		if (pieceAt(move.from).moveIsIllegal(move.to, this)) {
 			return this;
 		}
-		if (isOccupiedAt(move.to)) {
-			if (piecesAreSameColour(move)) {
-				return this;
-			}
-		}
 		return new StandardBoard(newPieces(move));
-	}
-
-	private boolean piecesAreSameColour(final Move move) {
-		final Piece movingPiece = pieceAt(move.from);
-		final Piece destinationPiece = pieceAt(move.to);
-		return movingPiece.colour().equals(destinationPiece.colour());
 	}
 
 	private List<Piece> newPieces(final Move move) {
