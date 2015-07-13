@@ -33,7 +33,7 @@ public class StandardBoard implements Board {
 		if (pieceAt(move.from).moveIsIllegal(move.to, this)) {
 			return this;
 		}
-		if (isOccupied(move.to)) {
+		if (isOccupiedAt(move.to)) {
 			if (piecesAreSameColour(move)) {
 				return this;
 			}
@@ -45,15 +45,6 @@ public class StandardBoard implements Board {
 		final Piece movingPiece = pieceAt(move.from);
 		final Piece destinationPiece = pieceAt(move.to);
 		return movingPiece.colour().equals(destinationPiece.colour());
-	}
-
-	private boolean isOccupied(final Position position) {
-		for (final Piece piece : pieces) {
-			if (piece.position().equals(position)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	private List<Piece> newPieces(final Move move) {
@@ -68,9 +59,20 @@ public class StandardBoard implements Board {
 		return to.column < 1 | to.column > 8 | to.row < 1 | to.row > 8;
 	}
 
-	private Piece pieceAt(final Position from) {
+	@Override
+	public boolean isOccupiedAt(final Position position) {
 		for (final Piece piece : pieces) {
-			if (piece.position().equals(from)) {
+			if (piece.position().equals(position)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Piece pieceAt(final Position position) {
+		for (final Piece piece : pieces) {
+			if (piece.position().equals(position)) {
 				return piece;
 			}
 		}
