@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.signum;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -24,7 +25,31 @@ public class Bishop implements Piece {
 
 	@Override
 	public boolean moveIsIllegal(final Position position, final Board board) {
-		return (rowDistance(position) != columnDistance(position));
+		if (rowDistance(position) != columnDistance(position)) {
+			return true;
+		}
+		if (board.isOccupiedAt(position)) {
+			if (board.pieceAt(position).colour().equals(colour)) {
+				return true;
+			}
+		}
+		if (routeIsNotClear(position, board)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean routeIsNotClear(final Position destination, final Board board) {
+		final int columnSign = (int) signum(destination.column - position.column);
+		final int rowDifference = (int) signum(destination.row - position.row);
+
+		for (int i = 1; i < columnDistance(destination); i++) {
+			final Position positionOnRoute = new Position(position.column + i*columnSign, position.row + i*rowDifference);
+			if (board.isOccupiedAt(positionOnRoute)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private int columnDistance(final Position position) {
