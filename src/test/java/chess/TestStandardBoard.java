@@ -13,6 +13,15 @@ import chess.pieces.Queen;
 public class TestStandardBoard {
 
 	@Test
+	public void cannotMoveIfPositionOccupiedByPieceOfSameColour() {
+		final StandardBoard board = new StandardBoard(
+				new Queen(BLACK, at(1, 1)),
+				new King(BLACK, at(4, 4)));
+
+		assertThat(board.play(new Move(from(1, 1), to(4, 4))), equalTo(board));
+	}
+
+	@Test
 	public void cannotMovePieceOffBoard() {
 		final StandardBoard board = new StandardBoard(new Queen(BLACK, new Position(1, 1)));
 

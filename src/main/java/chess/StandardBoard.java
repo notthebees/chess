@@ -29,9 +29,28 @@ public class StandardBoard implements Board {
 	public StandardBoard play(final Move move) {
 		if (moveIsOffBoard(move.to)) {
 			return this;
-		} else {
-			return new StandardBoard(newPieces(move));
 		}
+		if (isOccupied(move.to)) {
+			if (piecesAreSameColour(move)) {
+				return this;
+			}
+		}
+		return new StandardBoard(newPieces(move));
+	}
+
+	private boolean piecesAreSameColour(final Move move) {
+		final Piece movingPiece = pieceAt(move.from);
+		final Piece destinationPiece = pieceAt(move.to);
+		return movingPiece.colour().equals(destinationPiece.colour());
+	}
+
+	private boolean isOccupied(final Position position) {
+		for (final Piece piece : pieces) {
+			if (piece.position().equals(position)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private List<Piece> newPieces(final Move move) {
