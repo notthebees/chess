@@ -28,10 +28,8 @@ public class Bishop implements Piece {
 		if (rowDistance(position) != columnDistance(position)) {
 			return true;
 		}
-		if (board.isOccupiedAt(position)) {
-			if (board.pieceAt(position).colour().equals(colour)) {
-				return true;
-			}
+		if (board.isOccupiedBy(colour, position)) {
+			return true;
 		}
 		if (routeIsNotClear(position, board)) {
 			return true;
