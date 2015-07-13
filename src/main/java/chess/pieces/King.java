@@ -24,6 +24,9 @@ public class King implements Piece {
 
 	@Override
 	public boolean moveIsIllegal(final Position position, final Board board) {
+		if (board.isOccupiedBy(colour, position)) {
+			return true;
+		}
 		return columnTooFar(position) | rowTooFar(position);
 	}
 
