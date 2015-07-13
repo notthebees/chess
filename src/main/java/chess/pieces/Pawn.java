@@ -22,8 +22,8 @@ public class Pawn implements Piece{
 
 	@Override
 	public boolean moveIsIllegal(final Position position, final Board board) {
-		return ! ((position.column == this.position.column + 1)
-				& (position.row == this.position.row));
+		return ! ((position.column == this.position.column)
+				& (position.row == this.position.row + 1));
 	}
 
 	@Override
