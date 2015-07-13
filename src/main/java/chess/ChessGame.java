@@ -4,18 +4,18 @@ import chess.pieces.Position;
 
 public class ChessGame implements Game {
 
+	private Board currentBoard;
+
 	public ChessGame(final Board board) {
-		// TODO Auto-generated constructor stub
+		currentBoard = board;
 	}
 
 	public void play(final Position from, final Position to) {
-		// TODO Auto-generated method stub
-
+		currentBoard = currentBoard.move(from, to);
 	}
 
 	public Board currentBoard() {
-		// TODO Auto-generated method stub
-		return null;
+		return currentBoard;
 	}
 
 }
