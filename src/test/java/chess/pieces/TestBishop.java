@@ -6,26 +6,31 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
+import chess.Board;
+import chess.StandardBoard;
+
 public class TestBishop {
+
+	private final Board emptyBoard = new StandardBoard();
 
 	@Test
 	public void doesntMoveIfIllegal() {
 		final Bishop bishop = new Bishop(BLACK, new Position(1, 1));
 
-		assertThat(bishop.moveIsIllegal(position(2, 3)), equalTo(true));
-		assertThat(bishop.moveIsIllegal(position(1, 2)), equalTo(true));
-		assertThat(bishop.moveIsIllegal(position(5, 1)), equalTo(true));
-		assertThat(bishop.moveIsIllegal(position(2, 4)), equalTo(true));
+		assertThat(bishop.moveIsIllegal(position(2, 3), emptyBoard), equalTo(true));
+		assertThat(bishop.moveIsIllegal(position(1, 2), emptyBoard), equalTo(true));
+		assertThat(bishop.moveIsIllegal(position(5, 1), emptyBoard), equalTo(true));
+		assertThat(bishop.moveIsIllegal(position(2, 4), emptyBoard), equalTo(true));
 	}
 
 	@Test
 	public void movesIfLegal() {
 		final Bishop bishop = new Bishop(BLACK, new Position(1, 1));
 
-		assertThat(bishop.moveIsIllegal(position(2, 2)), equalTo(false));
-		assertThat(bishop.moveIsIllegal(position(0, 2)), equalTo(false));
-		assertThat(bishop.moveIsIllegal(position(4, -2)), equalTo(false));
-		assertThat(bishop.moveIsIllegal(position(-1, -1)), equalTo(false));
+		assertThat(bishop.moveIsIllegal(position(2, 2), emptyBoard), equalTo(false));
+		assertThat(bishop.moveIsIllegal(position(0, 2), emptyBoard), equalTo(false));
+		assertThat(bishop.moveIsIllegal(position(4, -2), emptyBoard), equalTo(false));
+		assertThat(bishop.moveIsIllegal(position(-1, -1), emptyBoard), equalTo(false));
 	}
 
 	private Position position(final int column, final int row) {

@@ -5,6 +5,8 @@ import static java.lang.Math.abs;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import chess.Board;
+
 public class Queen implements Piece {
 
 	private final Colour colour;
@@ -21,7 +23,7 @@ public class Queen implements Piece {
 	}
 
 	@Override
-	public boolean moveIsIllegal(final Position position) {
+	public boolean moveIsIllegal(final Position position, final Board board) {
 		return ! (diagonalMove(position) | verticalMove(position) | horizontalMove(position));
 	}
 

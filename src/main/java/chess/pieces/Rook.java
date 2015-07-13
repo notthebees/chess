@@ -3,6 +3,8 @@ package chess.pieces;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import chess.Board;
+
 public class Rook implements Piece {
 
 	private final Colour colour;
@@ -19,7 +21,7 @@ public class Rook implements Piece {
 	}
 
 	@Override
-	public boolean moveIsIllegal(final Position position) {
+	public boolean moveIsIllegal(final Position position, final Board board) {
 		return ! ((position.column == this.position.column) | (position.row == this.position.row));
 	}
 

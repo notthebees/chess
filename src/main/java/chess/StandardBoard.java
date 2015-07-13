@@ -30,7 +30,7 @@ public class StandardBoard implements Board {
 		if (moveIsOffBoard(move.to)) {
 			return this;
 		}
-		if (pieceAt(move.from).moveIsIllegal(move.to)) {
+		if (pieceAt(move.from).moveIsIllegal(move.to, this)) {
 			return this;
 		}
 		if (isOccupied(move.to)) {

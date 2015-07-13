@@ -6,26 +6,31 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
+import chess.Board;
+import chess.StandardBoard;
+
 public class TestKing {
+
+	private final Board emptyBoard = new StandardBoard();
 
 	@Test
 	public void doesntMoveIfIllegal() {
 		final King king = new King(BLACK, new Position(1, 1));
 
-		assertThat(king.moveIsIllegal(position(1, 3)), equalTo(true));
-		assertThat(king.moveIsIllegal(position(-1, 2)), equalTo(true));
-		assertThat(king.moveIsIllegal(position(5, 0)), equalTo(true));
-		assertThat(king.moveIsIllegal(position(1, 3)), equalTo(true));
+		assertThat(king.moveIsIllegal(position(1, 3), emptyBoard), equalTo(true));
+		assertThat(king.moveIsIllegal(position(-1, 2), emptyBoard), equalTo(true));
+		assertThat(king.moveIsIllegal(position(5, 0), emptyBoard), equalTo(true));
+		assertThat(king.moveIsIllegal(position(1, 3), emptyBoard), equalTo(true));
 	}
 
 	@Test
 	public void movesIfLegal() {
 		final King king = new King(BLACK, new Position(1, 1));
 
-		assertThat(king.moveIsIllegal(position(1, 2)), equalTo(false));
-		assertThat(king.moveIsIllegal(position(2, 2)), equalTo(false));
-		assertThat(king.moveIsIllegal(position(1, 0)), equalTo(false));
-		assertThat(king.moveIsIllegal(position(2, 1)), equalTo(false));
+		assertThat(king.moveIsIllegal(position(1, 2), emptyBoard), equalTo(false));
+		assertThat(king.moveIsIllegal(position(2, 2), emptyBoard), equalTo(false));
+		assertThat(king.moveIsIllegal(position(1, 0), emptyBoard), equalTo(false));
+		assertThat(king.moveIsIllegal(position(2, 1), emptyBoard), equalTo(false));
 	}
 
 	private Position position(final int column, final int row) {
