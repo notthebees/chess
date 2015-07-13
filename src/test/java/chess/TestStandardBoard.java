@@ -1,16 +1,28 @@
 package chess;
 
 import static chess.pieces.Colour.BLACK;
+import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Position;
 import chess.pieces.Queen;
 
 public class TestStandardBoard {
+
+	@Test
+	public void checksIfPositionIsOccupied() {
+		final Board board = new StandardBoard(
+				new Pawn(BLACK, at(1, 2)),
+				new Pawn(WHITE, at(2, 3)));
+
+		assertThat(board.isOccupiedBy(BLACK, at(1, 2)), equalTo(true));
+		assertThat(board.isOccupiedAt(at(2, 3)), equalTo(true));
+	}
 
 	@Test
 	public void cannotMoveIfPositionOccupiedByPieceOfSameColour() {
