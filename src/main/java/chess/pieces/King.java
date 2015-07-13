@@ -33,6 +33,16 @@ public class King implements Piece {
 	}
 
 	@Override
+	public Colour colour() {
+		return colour;
+	}
+
+	@Override
+	public Position position() {
+		return position;
+	}
+
+	@Override
 	public String toString() {
 		return colour.toString() + " King @ " + position;
 	}
