@@ -5,8 +5,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 public class Position {
 
-	private final int column;
-	private final int row;
+	public final int column;
+	public final int row;
 
 	public Position(final int column, final int row) {
 		this.column = column;
