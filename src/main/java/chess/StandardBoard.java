@@ -8,6 +8,7 @@ import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import chess.pieces.Colour;
 import chess.pieces.Piece;
 import chess.pieces.Position;
 
@@ -57,6 +58,14 @@ public class StandardBoard implements Board {
 
 	private boolean moveIsOffBoard(final Position to) {
 		return to.column < 1 | to.column > 8 | to.row < 1 | to.row > 8;
+	}
+
+	@Override
+	public boolean isOccupiedBy(final Colour colour, final Position position) {
+		if (! isOccupiedAt(position)) {
+			return false;
+		}
+		return pieceAt(position).colour().equals(colour);
 	}
 
 	@Override
