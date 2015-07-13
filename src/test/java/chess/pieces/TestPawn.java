@@ -15,6 +15,13 @@ public class TestPawn {
 	private final Board emptyBoard = new StandardBoard();
 
 	@Test
+	public void moveDiagonallyToCapture() {
+		final Pawn pawn = new Pawn(WHITE, new Position(1, 2));
+		final Board board = new StandardBoard(pawn, new Pawn(BLACK, position(2, 3)));
+		assertThat(pawn.moveIsIllegal(position(2, 3), board), equalTo(false));
+	}
+
+	@Test
 	public void moveIllegalIfDestinationOccupiedByFriendlyPiece() {
 		final Pawn pawn = new Pawn(WHITE, new Position(1, 2));
 		final Board board = new StandardBoard(pawn, new Pawn(WHITE, position(1, 3)));
