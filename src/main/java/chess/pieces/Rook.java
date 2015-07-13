@@ -21,6 +21,11 @@ public class Rook implements Piece {
 		return this;
 	}
 
+	@Override
+	public boolean moveIsIllegal(final Position position) {
+		return ! canMoveTo(position);
+	}
+
 	private boolean canMoveTo(final Position position) {
 		if (noMove(position)) {
 			return false;

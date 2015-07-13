@@ -23,6 +23,11 @@ public class King implements Piece {
 		return this;
 	}
 
+	@Override
+	public boolean moveIsIllegal(final Position position) {
+		return ! canMoveTo(position);
+	}
+
 	private boolean canMoveTo(final Position position) {
 		return ! (noMove(position) | columnTooFar(position) | rowTooFar(position));
 	}
