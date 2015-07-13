@@ -17,26 +17,20 @@ public class Bishop implements Piece {
 
 	@Override
 	public Bishop moveTo(final Position position) {
-		if (canMoveTo(position)) {
-			return new Bishop(colour, position);
-		}
-		return this;
+		return new Bishop(colour, position);
 	}
 
 	@Override
 	public boolean moveIsIllegal(final Position position) {
-		return ! canMoveTo(position);
+		return (rowDistance(position) != columnDistance(position));
 	}
 
-	private boolean canMoveTo(final Position position) {
-		if (noMove(position)) {
-			return false;
-		}
-		return (abs(position.row - this.position.row) == abs(position.column - this.position.column));
+	private int columnDistance(final Position position) {
+		return abs(position.column - this.position.column);
 	}
 
-	private boolean noMove(final Position position) {
-		return position.equals(this.position);
+	private int rowDistance(final Position position) {
+		return abs(position.row - this.position.row);
 	}
 
 	@Override

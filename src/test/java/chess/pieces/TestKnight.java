@@ -12,20 +12,20 @@ public class TestKnight {
 	public void doesntMoveIfIllegal() {
 		final Knight knight = new Knight(BLACK, new Position(1, 1));
 
-		assertThat(knight.moveTo(position(2, 2)), equalTo(knight));
-		assertThat(knight.moveTo(position(1, 2)), equalTo(knight));
-		assertThat(knight.moveTo(position(4, 3)), equalTo(knight));
-		assertThat(knight.moveTo(position(5, 3)), equalTo(knight));
+		assertThat(knight.moveIsIllegal(position(2, 2)), equalTo(true));
+		assertThat(knight.moveIsIllegal(position(1, 2)), equalTo(true));
+		assertThat(knight.moveIsIllegal(position(4, 3)), equalTo(true));
+		assertThat(knight.moveIsIllegal(position(5, 3)), equalTo(true));
 	}
 
 	@Test
 	public void movesIfLegal() {
 		final Knight knight = new Knight(BLACK, new Position(1, 1));
 
-		assertThat(knight.moveTo(position(2, 3)), equalTo(new Knight(BLACK, position(2, 3))));
-		assertThat(knight.moveTo(position(0, 3)), equalTo(new Knight(BLACK, position(0, 3))));
-		assertThat(knight.moveTo(position(-1, 0)), equalTo(new Knight(BLACK, position(-1, 0))));
-		assertThat(knight.moveTo(position(2, -1)), equalTo(new Knight(BLACK, position(2, -1))));
+		assertThat(knight.moveIsIllegal(position(2, 3)), equalTo(false));
+		assertThat(knight.moveIsIllegal(position(0, 3)), equalTo(false));
+		assertThat(knight.moveIsIllegal(position(-1, 0)), equalTo(false));
+		assertThat(knight.moveIsIllegal(position(2, -1)), equalTo(false));
 	}
 
 	private Position position(final int column, final int row) {

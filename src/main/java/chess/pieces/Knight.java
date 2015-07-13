@@ -17,23 +17,13 @@ public class Knight implements Piece {
 
 	@Override
 	public Knight moveTo(final Position position) {
-		if (canMoveTo(position)) {
-			return new Knight(colour, position);
-		}
-		return this;
+		return new Knight(colour, position);
 	}
 
 	@Override
 	public boolean moveIsIllegal(final Position position) {
-		return ! canMoveTo(position);
-	}
-
-	private boolean canMoveTo(final Position position) {
-		if (noMove(position)) {
-			return false;
-		}
-		return (columnDifference(position) == 2) & (rowDifference(position) == 1)
-				| (columnDifference(position) == 1) & (rowDifference(position) == 2);
+		return ! ((columnDifference(position) == 2) & (rowDifference(position) == 1)
+				| (columnDifference(position) == 1) & (rowDifference(position) == 2));
 	}
 
 	private int rowDifference(final Position position) {
@@ -42,10 +32,6 @@ public class Knight implements Piece {
 
 	private int columnDifference(final Position position) {
 		return abs(position.column - this.position.column);
-	}
-
-	private boolean noMove(final Position position) {
-		return position.equals(this.position);
 	}
 
 	@Override

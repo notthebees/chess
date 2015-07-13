@@ -12,20 +12,20 @@ public class TestRook {
 	public void doesntMoveIfIllegal() {
 		final Rook rook = new Rook(BLACK, new Position(1, 1));
 
-		assertThat(rook.moveTo(position(2, 3)), equalTo(rook));
-		assertThat(rook.moveTo(position(-1, 2)), equalTo(rook));
-		assertThat(rook.moveTo(position(5, 0)), equalTo(rook));
-		assertThat(rook.moveTo(position(2, 2)), equalTo(rook));
+		assertThat(rook.moveIsIllegal(position(2, 3)), equalTo(true));
+		assertThat(rook.moveIsIllegal(position(-1, 2)), equalTo(true));
+		assertThat(rook.moveIsIllegal(position(5, 0)), equalTo(true));
+		assertThat(rook.moveIsIllegal(position(2, 2)), equalTo(true));
 	}
 
 	@Test
 	public void movesIfLegal() {
 		final Rook rook = new Rook(BLACK, new Position(1, 1));
 
-		assertThat(rook.moveTo(position(1, 2)), equalTo(new Rook(BLACK, position(1, 2))));
-		assertThat(rook.moveTo(position(6, 1)), equalTo(new Rook(BLACK, position(6, 1))));
-		assertThat(rook.moveTo(position(1, 0)), equalTo(new Rook(BLACK, position(1, 0))));
-		assertThat(rook.moveTo(position(1, -2)), equalTo(new Rook(BLACK, position(1, -2))));
+		assertThat(rook.moveIsIllegal(position(1, 2)), equalTo(false));
+		assertThat(rook.moveIsIllegal(position(6, 1)), equalTo(false));
+		assertThat(rook.moveIsIllegal(position(1, 0)), equalTo(false));
+		assertThat(rook.moveIsIllegal(position(1, -2)), equalTo(false));
 	}
 
 	private Position position(final int column, final int row) {

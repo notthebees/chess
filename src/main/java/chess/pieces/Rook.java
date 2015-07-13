@@ -15,26 +15,12 @@ public class Rook implements Piece {
 
 	@Override
 	public Rook moveTo(final Position position) {
-		if (canMoveTo(position)) {
-			return new Rook(colour, position);
-		}
-		return this;
+		return new Rook(colour, position);
 	}
 
 	@Override
 	public boolean moveIsIllegal(final Position position) {
-		return ! canMoveTo(position);
-	}
-
-	private boolean canMoveTo(final Position position) {
-		if (noMove(position)) {
-			return false;
-		}
-		return (position.column == this.position.column) | (position.row == this.position.row);
-	}
-
-	private boolean noMove(final Position position) {
-		return position.equals(this.position);
+		return ! ((position.column == this.position.column) | (position.row == this.position.row));
 	}
 
 	@Override

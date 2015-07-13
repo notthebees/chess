@@ -15,19 +15,13 @@ public class Pawn implements Piece{
 
 	@Override
 	public Pawn moveTo(final Position position) {
-		if (canMoveTo(position)) {
-			return new Pawn(colour, position);
-		}
-		return this;
+		return new Pawn(colour, position);
 	}
 
 	@Override
 	public boolean moveIsIllegal(final Position position) {
-		return ! canMoveTo(position);
-	}
-
-	private boolean canMoveTo(final Position position) {
-		return (position.column == this.position.column + 1) & (position.row == this.position.row);
+		return ! ((position.column == this.position.column + 1)
+				& (position.row == this.position.row));
 	}
 
 	@Override

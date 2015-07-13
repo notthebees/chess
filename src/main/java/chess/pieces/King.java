@@ -17,19 +17,12 @@ public class King implements Piece {
 
 	@Override
 	public King moveTo(final Position position) {
-		if (canMoveTo(position)) {
-			return new King(colour, position);
-		}
-		return this;
+		return new King(colour, position);
 	}
 
 	@Override
 	public boolean moveIsIllegal(final Position position) {
-		return ! canMoveTo(position);
-	}
-
-	private boolean canMoveTo(final Position position) {
-		return ! (noMove(position) | columnTooFar(position) | rowTooFar(position));
+		return columnTooFar(position) | rowTooFar(position);
 	}
 
 	private boolean rowTooFar(final Position position) {
@@ -38,10 +31,6 @@ public class King implements Piece {
 
 	private boolean columnTooFar(final Position position) {
 		return abs(position.column - this.position.column) > 1;
-	}
-
-	private boolean noMove(final Position position) {
-		return position.equals(this.position);
 	}
 
 	@Override

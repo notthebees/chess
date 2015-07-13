@@ -12,20 +12,20 @@ public class TestKing {
 	public void doesntMoveIfIllegal() {
 		final King king = new King(BLACK, new Position(1, 1));
 
-		assertThat(king.moveTo(position(1, 3)), equalTo(king));
-		assertThat(king.moveTo(position(-1, 2)), equalTo(king));
-		assertThat(king.moveTo(position(5, 0)), equalTo(king));
-		assertThat(king.moveTo(position(1, 1)), equalTo(king));
+		assertThat(king.moveIsIllegal(position(1, 3)), equalTo(true));
+		assertThat(king.moveIsIllegal(position(-1, 2)), equalTo(true));
+		assertThat(king.moveIsIllegal(position(5, 0)), equalTo(true));
+		assertThat(king.moveIsIllegal(position(1, 3)), equalTo(true));
 	}
 
 	@Test
 	public void movesIfLegal() {
 		final King king = new King(BLACK, new Position(1, 1));
 
-		assertThat(king.moveTo(position(1, 2)), equalTo(new King(BLACK, position(1, 2))));
-		assertThat(king.moveTo(position(2, 2)), equalTo(new King(BLACK, position(2, 2))));
-		assertThat(king.moveTo(position(1, 0)), equalTo(new King(BLACK, position(1, 0))));
-		assertThat(king.moveTo(position(2, 1)), equalTo(new King(BLACK, position(2, 1))));
+		assertThat(king.moveIsIllegal(position(1, 2)), equalTo(false));
+		assertThat(king.moveIsIllegal(position(2, 2)), equalTo(false));
+		assertThat(king.moveIsIllegal(position(1, 0)), equalTo(false));
+		assertThat(king.moveIsIllegal(position(2, 1)), equalTo(false));
 	}
 
 	private Position position(final int column, final int row) {

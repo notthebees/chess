@@ -17,22 +17,12 @@ public class Queen implements Piece {
 
 	@Override
 	public Queen moveTo(final Position position) {
-		if (canMoveTo(position)) {
-			return new Queen(colour, position);
-		}
-		return this;
+		return new Queen(colour, position);
 	}
 
 	@Override
 	public boolean moveIsIllegal(final Position position) {
-		return ! canMoveTo(position);
-	}
-
-	private boolean canMoveTo(final Position position) {
-		if (noMove(position)) {
-			return false;
-		}
-		return diagonalMove(position) | verticalMove(position) | horizontalMove(position);
+		return ! (diagonalMove(position) | verticalMove(position) | horizontalMove(position));
 	}
 
 	private boolean horizontalMove(final Position position) {
@@ -45,10 +35,6 @@ public class Queen implements Piece {
 
 	private boolean diagonalMove(final Position position) {
 		return abs(position.row - this.position.row) == abs(position.column - this.position.column);
-	}
-
-	private boolean noMove(final Position position) {
-		return position.equals(this.position);
 	}
 
 	@Override
