@@ -25,11 +25,23 @@ public class StandardBoard implements Board {
 
 	@Override
 	public StandardBoard play(final Move move) {
+		if (moveIsOffBoard(move.to)) {
+			return this;
+		} else {
+			return new StandardBoard(newPieces(move));
+		}
+	}
+
+	private List<Piece> newPieces(final Move move) {
 		final Piece toMove = pieceAt(move.from);
 		final List<Piece> newPieces = new ArrayList<>(pieces);
 		newPieces.remove(toMove);
 		newPieces.add(toMove.moveTo(move.to));
-		return new StandardBoard(newPieces);
+		return newPieces;
+	}
+
+	private boolean moveIsOffBoard(final Position to) {
+		return to.column < 1 | to.column > 8 | to.row < 1 | to.row > 8;
 	}
 
 	private Piece pieceAt(final Position from) {
