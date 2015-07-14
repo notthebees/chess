@@ -3,16 +3,35 @@ package chess.pieces.move;
 import static chess.pieces.Colour.BLACK;
 import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
 import chess.StandardBoard;
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Position;
 import chess.pieces.Queen;
 
 public class TestSimpleMove {
+
+	@Test
+	public void removesCapturedPieceFromBoard() {
+		final SimpleMove move = new SimpleMove(from(5, 1), to(8, 1));
+
+		final Queen attackingPiece = new Queen(WHITE, at(5, 1));
+		final Queen capturedPiece = new Queen(BLACK, at(8, 1));
+		final Pawn someOtherPiece = new Pawn(BLACK, at(4, 2));
+		final Queen movedPiece = new Queen(WHITE, at(8, 1));
+
+		final StandardBoard board = new StandardBoard(
+				attackingPiece,
+				capturedPiece,
+				someOtherPiece);
+
+		assertThat(move.updatePieces(board), containsInAnyOrder(movedPiece, someOtherPiece));
+	}
 
 	@Test
 	public void cannotMoveIfOwnKingWouldBeInCheck() {

@@ -19,11 +19,21 @@ public class SimpleMove implements Move {
 
 	@Override
 	public Set<Piece> updatePieces(final Board board) {
-		final Piece movingPiece = board.pieceAt(from);
 		final Set<Piece> newPieces = board.pieces();
+		removeCapturedPieces(board, newPieces);
+		movePiece(board.pieceAt(from), newPieces);
+		return newPieces;
+	}
+
+	private void movePiece(final Piece movingPiece, final Set<Piece> newPieces) {
 		newPieces.remove(movingPiece);
 		newPieces.add(movingPiece.moveTo(to));
-		return newPieces;
+	}
+
+	private void removeCapturedPieces(final Board board, final Set<Piece> newPieces) {
+		if (board.isOccupiedAt(to)) {
+			newPieces.remove(board.pieceAt(to));
+		}
 	}
 
 	@Override
