@@ -122,12 +122,23 @@ public class Queen implements Piece {
 
 	@Override
 	public boolean equals(final Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+		if (obj instanceof Queen) {
+			final Queen other = (Queen) obj;
+			return new EqualsBuilder()
+			.append(colour, other.colour)
+			.append(position, other.position)
+			.isEquals();
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
+		return new HashCodeBuilder()
+		.append(colour)
+		.append(position)
+		.toHashCode();
 	}
 
 }
