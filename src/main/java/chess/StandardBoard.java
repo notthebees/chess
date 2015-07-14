@@ -1,5 +1,10 @@
 package chess;
 
+import static chess.pieces.Colour.BLACK;
+import static chess.pieces.Colour.NULL_COLOUR;
+import static chess.pieces.Colour.WHITE;
+import static java.util.Arrays.asList;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,18 +22,38 @@ import chess.pieces.move.Move;
 public class StandardBoard implements Board {
 
 	private final Set<Piece> pieces = new HashSet<>();
+	private final Colour lastToMove;
+
+	private StandardBoard(final Set<Piece> pieces, final Colour lastToMove) {
+		this.pieces.addAll(pieces);
+		this.lastToMove = lastToMove;
+	}
 
 	public StandardBoard(final Set<Piece> pieces) {
-		this.pieces.addAll(pieces);
+		this(pieces, NULL_COLOUR);
 	}
 
 	public StandardBoard(final List<Piece> pieces) {
-		this.pieces.addAll(pieces);
+		this(new HashSet<>(pieces), NULL_COLOUR);
 	}
 
 	public StandardBoard(final Piece...pieces) {
-		for (final Piece piece : pieces) {
-			this.pieces.add(piece);
+		this(asList(pieces));
+	}
+
+	@Override
+	public StandardBoard play(final Move move) {
+		if (move.isIllegal(this)) {
+			return this;
+		}
+		return new StandardBoard(move.updatePieces(this), updateLastToMove());
+	}
+
+	private Colour updateLastToMove() {
+		if (lastToMove.equals(WHITE)) {
+			return BLACK;
+		} else {
+			return WHITE;
 		}
 	}
 
@@ -109,14 +134,6 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
-	public StandardBoard play(final Move move) {
-		if (move.isIllegal(this)) {
-			return this;
-		}
-		return new StandardBoard(move.updatePieces(this));
-	}
-
-	@Override
 	public boolean isOccupiedBy(final Colour colour, final Position position) {
 		if (! isOccupiedAt(position)) {
 			return false;
@@ -151,12 +168,21 @@ public class StandardBoard implements Board {
 
 	@Override
 	public boolean equals(final Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+		if (obj instanceof StandardBoard) {
+			final StandardBoard other = (StandardBoard) obj;
+			return new EqualsBuilder()
+			.append(pieces, other.pieces)
+			.isEquals();
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
+		return new HashCodeBuilder()
+		.append(pieces)
+		.toHashCode();
 	}
 
 }
