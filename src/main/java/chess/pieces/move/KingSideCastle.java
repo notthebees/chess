@@ -5,6 +5,7 @@ import java.util.Set;
 import chess.Board;
 import chess.pieces.Colour;
 import chess.pieces.Piece;
+import chess.pieces.Position;
 
 public class KingSideCastle implements Move {
 
@@ -15,19 +16,23 @@ public class KingSideCastle implements Move {
 	}
 
 	@Override
-	public Set<Piece> updatePieces(final Set<Piece> pieces, final Board board) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean isIllegal(final Board board) {
 		final Piece king = board.pieceAt(colour.kingPosition());
 		final Piece rook = board.pieceAt(colour.kingSideRookPosition());
 		if (king.hasMoved() | rook.hasMoved()) {
 			return true;
 		}
-		return false;
+		return rook.moveIsIllegal(rookDestination(), board);
+	}
+
+	private Position rookDestination() {
+		return new Position(colour.backRow()+5*colour.forwardStep(), colour.backRow());
+	}
+
+	@Override
+	public Set<Piece> updatePieces(final Set<Piece> pieces, final Board board) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import chess.Board;
 import chess.StandardBoard;
+import chess.pieces.Bishop;
 import chess.pieces.King;
 import chess.pieces.Piece;
 import chess.pieces.Position;
@@ -19,7 +20,17 @@ public class TestKingSideCastle {
 	private final Piece whiteRook = new Rook(WHITE, WHITE.kingSideRookPosition());
 
 	@Test
-	public void checksIfRookHasMoved() {
+	public void cannotCastleIfInterveningSpacesAreOccupied() {
+		final KingSideCastle castle = new KingSideCastle(WHITE);
+		final Board board = new StandardBoard(
+				whiteKing,
+				whiteRook,
+				new Bishop(WHITE, new Position(6, 1)));
+		assertThat(castle.isIllegal(board), equalTo(true));
+	}
+
+	@Test
+	public void cannotCastleIfRookHasMoved() {
 		final KingSideCastle castle = new KingSideCastle(WHITE);
 		Board board = new StandardBoard(whiteKing, whiteRook);
 		board = board.play(new SimpleMove(WHITE.kingSideRookPosition(), new Position(7, 1)));
