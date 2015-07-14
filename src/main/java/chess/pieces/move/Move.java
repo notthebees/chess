@@ -9,8 +9,8 @@ import chess.pieces.Position;
 
 public class Move {
 
-	public final Position from;
-	public final Position to;
+	private final Position from;
+	private final Position to;
 
 	public Move(final Position from, final Position to) {
 		this.from = from;
