@@ -3,7 +3,7 @@ package chess.pieces;
 public enum Colour {
 	WHITE (1, 1),
 	BLACK (8, -1),
-	NULL (0, 0);
+	NULL_COLOUR (0, 0);
 
 	private final int backRow;
 	private final int forwardStep;
