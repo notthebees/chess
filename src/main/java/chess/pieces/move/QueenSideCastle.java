@@ -1,5 +1,6 @@
 package chess.pieces.move;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import chess.Board;
@@ -46,7 +47,27 @@ public class QueenSideCastle implements Move {
 		if (king.hasMoved() | rook.hasMoved()) {
 			return true;
 		}
+		if (interveningSpacesOccupied(board)) {
+			return true;
+		}
 		return rook.moveIsIllegal(rookDestination(), board);
+	}
+
+	private boolean interveningSpacesOccupied(final Board board) {
+		for (final Position position : interveningPositions()) {
+			if (board.isOccupiedAt(position)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private Set<Position> interveningPositions() {
+		final Set<Position> interveningPositions = new HashSet<>();
+		interveningPositions.add(kingDestination());
+		interveningPositions.add(rookDestination());
+		interveningPositions.add(new Position(colour.backRow()+colour.forwardStep(), colour.backRow()));
+		return interveningPositions;
 	}
 
 	private Position rookDestination() {

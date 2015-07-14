@@ -1,5 +1,6 @@
 package chess.pieces.move;
 
+import static chess.pieces.Colour.BLACK;
 import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -38,7 +39,7 @@ public class TestQueenSideCastle {
 		final Board board = new StandardBoard(
 				whiteKing,
 				whiteRook,
-				new Bishop(WHITE, new Position(3, 1)));
+				new Bishop(BLACK, new Position(4, 1)));
 		assertThat(castle.isIllegal(board), equalTo(true));
 	}
 
