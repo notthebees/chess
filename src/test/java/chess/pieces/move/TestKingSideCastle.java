@@ -4,6 +4,9 @@ import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 import chess.Board;
@@ -18,6 +21,16 @@ public class TestKingSideCastle {
 
 	private final Piece whiteKing = new King(WHITE, WHITE.kingPosition());
 	private final Piece whiteRook = new Rook(WHITE, WHITE.kingSideRookPosition());
+
+	@Test
+	public void movesPiecesToCorrectPositions() {
+		final KingSideCastle castle = new KingSideCastle(WHITE);
+		final Board board = new StandardBoard(whiteKing, whiteRook);
+		final Set<Piece> updatedPieces = new HashSet<>();
+		updatedPieces.add(new King(WHITE, new Position(7, 1)));
+		updatedPieces.add(new Rook(WHITE, new Position(6, 1)));
+		assertThat(castle.updatePieces(board), equalTo(updatedPieces));
+	}
 
 	@Test
 	public void cannotCastleIfInterveningSpacesAreOccupied() {

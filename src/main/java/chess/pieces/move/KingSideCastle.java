@@ -16,6 +16,32 @@ public class KingSideCastle implements Move {
 	}
 
 	@Override
+	public Set<Piece> updatePieces(final Board board) {
+		final Set<Piece> pieces = board.pieces();
+		final Piece king = board.pieceAt(colour.kingPosition());
+		final Piece rook = board.pieceAt(colour.kingSideRookPosition());
+		removeOldPieces(pieces, king, rook);
+		addMovedPieces(pieces, king, rook);
+		return pieces;
+	}
+
+	private void addMovedPieces(final Set<Piece> pieces, final Piece king,
+			final Piece rook) {
+		pieces.add(king.moveTo(kingDestination()));
+		pieces.add(rook.moveTo(rookDestination()));
+	}
+
+	private void removeOldPieces(final Set<Piece> pieces, final Piece king,
+			final Piece rook) {
+		pieces.remove(king);
+		pieces.remove(rook);
+	}
+
+	private Position kingDestination() {
+		return new Position(colour.backRow()+6*colour.forwardStep(), colour.backRow());
+	}
+
+	@Override
 	public boolean isIllegal(final Board board) {
 		final Piece king = board.pieceAt(colour.kingPosition());
 		final Piece rook = board.pieceAt(colour.kingSideRookPosition());
@@ -27,12 +53,6 @@ public class KingSideCastle implements Move {
 
 	private Position rookDestination() {
 		return new Position(colour.backRow()+5*colour.forwardStep(), colour.backRow());
-	}
-
-	@Override
-	public Set<Piece> updatePieces(final Board board) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
