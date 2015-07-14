@@ -1,5 +1,6 @@
 package chess.pieces.move;
 
+import static chess.pieces.Colour.BLACK;
 import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -21,6 +22,20 @@ public class TestKingSideCastle {
 
 	private final Piece whiteKing = new King(WHITE, WHITE.kingPosition());
 	private final Piece whiteRook = new Rook(WHITE, WHITE.kingSideRookPosition());
+
+	@Test
+	public void cannotCastleIfInterveningSpacesAreAttacked() {
+		final KingSideCastle castle = new KingSideCastle(WHITE);
+		final Board board = new StandardBoard(whiteKing, whiteRook, new Rook(BLACK, new Position(6, 5)));
+		assertThat(castle.isIllegal(board), equalTo(true));
+	}
+
+	@Test
+	public void cannotCastleIfKingIsInCheck() {
+		final KingSideCastle castle = new KingSideCastle(WHITE);
+		final Board board = new StandardBoard(whiteKing, whiteRook, new Rook(BLACK, new Position(5, 5)));
+		assertThat(castle.isIllegal(board), equalTo(true));
+	}
 
 	@Test
 	public void movesPiecesToCorrectPositions() {
