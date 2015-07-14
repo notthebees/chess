@@ -48,13 +48,20 @@ public class KingSideCastle implements Move {
 		if (king.hasMoved() | rook.hasMoved()) {
 			return true;
 		}
+		if (interveningSpacesOccupied(board)) {
+			return true;
+		}
 		if (board.isInCheck(colour)) {
 			return true;
 		}
 		if (interveningSpacesAttacked(board)) {
 			return true;
 		}
-		return rook.moveIsIllegal(rookDestination(), board);
+		return false;
+	}
+
+	private boolean interveningSpacesOccupied(final Board board) {
+		return board.isOccupiedAt(kingDestination()) | board.isOccupiedAt(rookDestination());
 	}
 
 	private boolean interveningSpacesAttacked(final Board board) {

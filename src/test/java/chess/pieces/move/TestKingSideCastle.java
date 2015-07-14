@@ -24,6 +24,16 @@ public class TestKingSideCastle {
 	private final Piece whiteRook = new Rook(WHITE, WHITE.kingSideRookPosition());
 
 	@Test
+	public void cannotCastleIfInterveningSpacesAreOccupied() {
+		final KingSideCastle castle = new KingSideCastle(WHITE);
+		final Board board = new StandardBoard(
+				whiteKing,
+				whiteRook,
+				new Bishop(BLACK, new Position(6, 1)));
+		assertThat(castle.isIllegal(board), equalTo(true));
+	}
+
+	@Test
 	public void cannotCastleIfInterveningSpacesAreAttacked() {
 		final KingSideCastle castle = new KingSideCastle(WHITE);
 		final Board board = new StandardBoard(whiteKing, whiteRook, new Rook(BLACK, new Position(6, 5)));
@@ -45,16 +55,6 @@ public class TestKingSideCastle {
 		updatedPieces.add(new King(WHITE, new Position(7, 1)));
 		updatedPieces.add(new Rook(WHITE, new Position(6, 1)));
 		assertThat(castle.updatePieces(board), equalTo(updatedPieces));
-	}
-
-	@Test
-	public void cannotCastleIfInterveningSpacesAreOccupied() {
-		final KingSideCastle castle = new KingSideCastle(WHITE);
-		final Board board = new StandardBoard(
-				whiteKing,
-				whiteRook,
-				new Bishop(WHITE, new Position(6, 1)));
-		assertThat(castle.isIllegal(board), equalTo(true));
 	}
 
 	@Test
