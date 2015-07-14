@@ -31,6 +31,11 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
+	public Set<Piece> pieces() {
+		return new HashSet<>(pieces);
+	}
+
+	@Override
 	public StandardBoard play(final Move move) {
 		if (move.isIllegal(this)) {
 			return this;
