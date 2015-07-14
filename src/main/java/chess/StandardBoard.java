@@ -29,7 +29,7 @@ public class StandardBoard implements Board {
 
 	@Override
 	public StandardBoard play(final Move move) {
-		if (moveIsOffBoard(move.to)) {
+		if (move.isIllegal()) {
 			return this;
 		}
 		if (pieceAt(move.from).moveIsIllegal(move.to, this)) {
@@ -44,10 +44,6 @@ public class StandardBoard implements Board {
 		newPieces.remove(toMove);
 		newPieces.add(toMove.moveTo(move.to));
 		return newPieces;
-	}
-
-	private boolean moveIsOffBoard(final Position to) {
-		return to.column < 1 | to.column > 8 | to.row < 1 | to.row > 8;
 	}
 
 	@Override

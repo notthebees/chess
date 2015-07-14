@@ -12,4 +12,21 @@ public class Move {
 		this.to = to;
 	}
 
+	public boolean isIllegal() {
+		if (moveIsOffBoard()) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean moveIsOffBoard() {
+		if (to.column < 1 | to.row < 1) {
+			return true;
+		}
+		if (to.column > 8 | to.row > 8) {
+			return true;
+		}
+		return false;
+	}
+
 }
