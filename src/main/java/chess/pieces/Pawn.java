@@ -1,6 +1,5 @@
 package chess.pieces;
 
-import static chess.pieces.Colour.WHITE;
 import static java.lang.Math.abs;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -58,35 +57,19 @@ public class Pawn implements Piece{
 	}
 
 	private boolean onStartingSquare() {
-		if (colour.equals(WHITE)) {
-			return position.row == 2;
-		} else {
-			return position.row == 7;
-		}
+		return position.row == colour.frontRow();
 	}
 
 	private Position spaceInFront() {
-		if (colour.equals(WHITE)) {
-			return new Position(position.column, position.row + 1);
-		} else {
-			return new Position(position.column, position.row - 1);
-		}
+		return new Position(position.column, position.row + colour.forwardStep());
 	}
 
 	private boolean forwardTwoSteps(final Position destination) {
-		if (colour.equals(WHITE)) {
-			return destination.row == position.row + 2;
-		} else {
-			return destination.row == position.row - 2;
-		}
+		return destination.row == position.row + 2*colour.forwardStep();
 	}
 
 	private boolean forwardOneStep(final Position destination) {
-		if (colour.equals(WHITE)) {
-			return destination.row == position.row + 1;
-		} else {
-			return destination.row == position.row - 1;
-		}
+		return destination.row == position.row + colour.forwardStep();
 	}
 
 	private boolean columnStaysTheSame(final Position destination) {
