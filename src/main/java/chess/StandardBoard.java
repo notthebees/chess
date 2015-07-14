@@ -36,10 +36,10 @@ public class StandardBoard implements Board {
 	}
 
 	private List<Piece> newPieces(final Move move) {
-		final Piece toMove = pieceAt(move.from);
+		final Piece toMove = move.movingPiece(this);
 		final List<Piece> newPieces = new ArrayList<>(pieces);
 		newPieces.remove(toMove);
-		newPieces.add(toMove.moveTo(move.to));
+		newPieces.add(toMove.moveTo(move.destination()));
 		return newPieces;
 	}
 
