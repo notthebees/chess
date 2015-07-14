@@ -1,6 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +16,10 @@ public class StandardBoard implements Board {
 
 	private final Set<Piece> pieces = new HashSet<>();
 
+	public StandardBoard(final Set<Piece> pieces) {
+		this.pieces.addAll(pieces);
+	}
+
 	public StandardBoard(final List<Piece> pieces) {
 		this.pieces.addAll(pieces);
 	}
@@ -32,15 +35,7 @@ public class StandardBoard implements Board {
 		if (move.isIllegal(this)) {
 			return this;
 		}
-		return new StandardBoard(newPieces(move));
-	}
-
-	private List<Piece> newPieces(final Move move) {
-		final Piece toMove = move.movingPiece(this);
-		final List<Piece> newPieces = new ArrayList<>(pieces);
-		newPieces.remove(toMove);
-		newPieces.add(toMove.moveTo(move.destination()));
-		return newPieces;
+		return new StandardBoard(move.updatePieces(pieces, this));
 	}
 
 	@Override

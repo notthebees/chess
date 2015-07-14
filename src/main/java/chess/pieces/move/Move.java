@@ -1,5 +1,8 @@
 package chess.pieces.move;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import chess.Board;
 import chess.pieces.Piece;
 import chess.pieces.Position;
@@ -14,12 +17,12 @@ public class Move {
 		this.to = to;
 	}
 
-	public Position destination() {
-		return to;
-	}
-
-	public Piece movingPiece(final Board board) {
-		return board.pieceAt(from);
+	public Set<Piece> updatePieces(final Set<Piece> pieces, final Board board) {
+		final Piece movingPiece = board.pieceAt(from);
+		final Set<Piece> newPieces = new HashSet<>(pieces);
+		newPieces.remove(movingPiece);
+		newPieces.add(movingPiece.moveTo(to));
+		return newPieces;
 	}
 
 	public boolean isIllegal(final Board board) {
