@@ -24,6 +24,20 @@ public class TestQueenSideCastle {
 	private final Piece whiteRook = new Rook(WHITE, WHITE.queenSideRookPosition());
 
 	@Test
+	public void cannotCastleIfInterveningSpacesAreAttacked() {
+		final QueenSideCastle castle = new QueenSideCastle(WHITE);
+		final Board board = new StandardBoard(whiteKing, whiteRook, new Rook(BLACK, new Position(4, 5)));
+		assertThat(castle.isIllegal(board), equalTo(true));
+	}
+
+	@Test
+	public void cannotCastleIfKingIsInCheck() {
+		final QueenSideCastle castle = new QueenSideCastle(WHITE);
+		final Board board = new StandardBoard(whiteKing, whiteRook, new Rook(BLACK, new Position(5, 5)));
+		assertThat(castle.isIllegal(board), equalTo(true));
+	}
+
+	@Test
 	public void movesPiecesToCorrectPositions() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
 		final Board board = new StandardBoard(whiteKing, whiteRook);

@@ -47,13 +47,28 @@ public class QueenSideCastle implements Move {
 		if (king.hasMoved() | rook.hasMoved()) {
 			return true;
 		}
-		if (interveningSpacesOccupied(board)) {
+		if (interveningPositionsOccupied(board)) {
 			return true;
 		}
-		return rook.moveIsIllegal(rookDestination(), board);
+		if (board.isInCheck(colour)) {
+			return true;
+		}
+		if (interveningPositionsAttacked(board)) {
+			return true;
+		}
+		return false;
 	}
 
-	private boolean interveningSpacesOccupied(final Board board) {
+	private boolean interveningPositionsAttacked(final Board board) {
+		for (final Position position : interveningPositions()) {
+			if (board.isAttackedBy(colour.opposite(), position)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean interveningPositionsOccupied(final Board board) {
 		for (final Position position : interveningPositions()) {
 			if (board.isOccupiedAt(position)) {
 				return true;
