@@ -42,6 +42,11 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
+	public Colour lastToMove() {
+		return lastToMove;
+	}
+
+	@Override
 	public StandardBoard play(final Move move) {
 		if (move.isIllegal(this)) {
 			return this;
