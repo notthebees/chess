@@ -40,7 +40,7 @@ public class StandardBoard implements Board {
 		if (move.isIllegal(this)) {
 			return this;
 		}
-		return new StandardBoard(move.updatePieces(pieces, this));
+		return new StandardBoard(move.updatePieces(this));
 	}
 
 	@Override

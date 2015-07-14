@@ -1,6 +1,5 @@
 package chess.pieces.move;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import chess.Board;
@@ -18,9 +17,9 @@ public class SimpleMove implements Move {
 	}
 
 	@Override
-	public Set<Piece> updatePieces(final Set<Piece> pieces, final Board board) {
+	public Set<Piece> updatePieces(final Board board) {
 		final Piece movingPiece = board.pieceAt(from);
-		final Set<Piece> newPieces = new HashSet<>(pieces);
+		final Set<Piece> newPieces = board.pieces();
 		newPieces.remove(movingPiece);
 		newPieces.add(movingPiece.moveTo(to));
 		return newPieces;

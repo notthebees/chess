@@ -30,7 +30,7 @@ public class KingSideCastle implements Move {
 	}
 
 	@Override
-	public Set<Piece> updatePieces(final Set<Piece> pieces, final Board board) {
+	public Set<Piece> updatePieces(final Board board) {
 		// TODO Auto-generated method stub
 		return null;
 	}
