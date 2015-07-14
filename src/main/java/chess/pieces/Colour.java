@@ -1,16 +1,14 @@
 package chess.pieces;
 
 public enum Colour {
-	WHITE (1, 2, 1),
-	BLACK (8, 7, -1);
+	WHITE (1, 1),
+	BLACK (8, -1);
 
 	private final int backRow;
-	private final int frontRow;
 	private final int forwardStep;
 
-	Colour(final int backRow, final int frontRow, final int forwardStep) {
+	Colour(final int backRow, final int forwardStep) {
 		this.backRow = backRow;
-		this.frontRow = frontRow;
 		this.forwardStep = forwardStep;
 	}
 
@@ -19,7 +17,7 @@ public enum Colour {
 	}
 
 	public int frontRow() {
-		return frontRow;
+		return backRow + forwardStep;
 	}
 
 	public int forwardStep() {
