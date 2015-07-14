@@ -28,6 +28,9 @@ public class SimpleMove implements Move {
 
 	@Override
 	public boolean isIllegal(final Board board) {
+		if (to.equals(from)) {
+			return true;
+		}
 		if (moveIsOffBoard()) {
 			return true;
 		}
