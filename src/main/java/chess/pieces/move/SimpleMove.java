@@ -3,6 +3,7 @@ package chess.pieces.move;
 import java.util.Set;
 
 import chess.Board;
+import chess.StandardBoard;
 import chess.pieces.Piece;
 import chess.pieces.Position;
 
@@ -36,7 +37,15 @@ public class SimpleMove implements Move {
 		if (board.pieceAt(from).moveIsIllegal(to, board)) {
 			return true;
 		}
+		if (leavesKingInCheck(board)) {
+			return true;
+		}
 		return false;
+	}
+
+	private boolean leavesKingInCheck(final Board board) {
+		final Board resultingBoard = new StandardBoard(updatePieces(board));
+		return resultingBoard.isInCheck(board.pieceAt(from).colour());
 	}
 
 	private boolean moveIsOffBoard() {

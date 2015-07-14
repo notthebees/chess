@@ -1,6 +1,7 @@
 package chess.pieces.move;
 
 import static chess.pieces.Colour.BLACK;
+import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -12,6 +13,18 @@ import chess.pieces.Position;
 import chess.pieces.Queen;
 
 public class TestSimpleMove {
+
+	@Test
+	public void cannotMoveIfOwnKingWouldBeInCheck() {
+		final SimpleMove move = new SimpleMove(from(6, 1), to(6, 2));
+
+		final StandardBoard board = new StandardBoard(
+				new King(BLACK, at(5, 1)),
+				new Queen(BLACK, at(6, 1)),
+				new Queen(WHITE, at(8, 1)));
+
+		assertThat(move.isIllegal(board), equalTo(true));
+	}
 
 	@Test
 	public void cannotMoveIfPositionOccupiedByPieceOfSameColour() {
