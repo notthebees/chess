@@ -8,20 +8,21 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.Test;
 
 import chess.Board;
-import chess.StandardBoard;
+import chess.StandardBoardBuilder;
 
 public class TestQueen {
 
-	private final Board emptyBoard = new StandardBoard();
+	private final Board emptyBoard = board().build();
 
 	@Test
 	public void moveIllegalIfPathObstructedByAnyPiece() {
 		final Queen queen = new Queen(BLACK, new Position(4, 4));
-		final Board board = new StandardBoard(
+		final Board board = board().withPieces(
 				queen,
 				new Pawn(BLACK, position(5,  4)),
 				new Pawn(BLACK, position(5,  5)),
-				new Pawn(WHITE, position(4,  2)));
+				new Pawn(WHITE, position(4,  2)))
+				.build();
 
 		assertThat(queen.moveIsIllegal(position(7, 4), board), equalTo(true));
 		assertThat(queen.moveIsIllegal(position(7, 7), board), equalTo(true));
@@ -31,13 +32,13 @@ public class TestQueen {
 	@Test
 	public void moveIllegalIfDestinationOccupiedByFriendlyPiece() {
 		final Queen queen = new Queen(BLACK, new Position(1, 1));
-		final Board board = new StandardBoard(queen, new Pawn(BLACK, position(3,  1)));
+		final Board board = board().withPieces(queen, new Pawn(BLACK, position(3,  1))).build();
 		assertThat(queen.moveIsIllegal(position(3, 1), board), equalTo(true));
 	}
 
 	@Test
 	public void doesntMoveIfIllegal() {
-		final Queen queen = new Queen(BLACK, new Position(1, 1));
+		final Queen queen = new Queen(BLACK, position(1, 1));
 
 		assertThat(queen.moveIsIllegal(position(2, 3), emptyBoard), equalTo(true));
 		assertThat(queen.moveIsIllegal(position(-1, 2), emptyBoard), equalTo(true));
@@ -47,7 +48,7 @@ public class TestQueen {
 
 	@Test
 	public void movesIfLegal() {
-		final Queen queen = new Queen(BLACK, new Position(1, 1));
+		final Queen queen = new Queen(BLACK, position(1, 1));
 
 		assertThat(queen.moveIsIllegal(position(1, 2), emptyBoard), equalTo(false));
 		assertThat(queen.moveIsIllegal(position(6, 1), emptyBoard), equalTo(false));
@@ -61,6 +62,10 @@ public class TestQueen {
 
 	private Position position(final int column, final int row) {
 		return new Position(column, row);
+	}
+
+	private StandardBoardBuilder board() {
+		return new StandardBoardBuilder();
 	}
 
 }

@@ -8,19 +8,20 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.Test;
 
 import chess.Board;
-import chess.StandardBoard;
+import chess.StandardBoardBuilder;
 
 public class TestBishop {
 
-	private final Board emptyBoard = new StandardBoard();
+	private final Board emptyBoard = board().build();
 
 	@Test
 	public void moveIllegalIfPathObstructedByAnyPiece() {
 		final Bishop bishop = new Bishop(BLACK, new Position(4, 4));
-		final Board board = new StandardBoard(
+		final Board board = board().withPieces(
 				bishop,
 				new Pawn(BLACK, position(5,  5)),
-				new Pawn(WHITE, position(2,  6)));
+				new Pawn(WHITE, position(2,  6)))
+				.build();
 
 		assertThat(bishop.moveIsIllegal(position(7, 7), board), equalTo(true));
 		assertThat(bishop.moveIsIllegal(position(1, 7), board), equalTo(true));
@@ -29,7 +30,7 @@ public class TestBishop {
 	@Test
 	public void moveIllegalIfDestinationOccupiedByFriendlyPiece() {
 		final Bishop bishop = new Bishop(BLACK, new Position(1, 1));
-		final Board board = new StandardBoard(bishop, new Pawn(BLACK, position(4,  4)));
+		final Board board = board().withPieces(bishop, new Pawn(BLACK, position(4,  4))).build();
 		assertThat(bishop.moveIsIllegal(position(4, 4), board), equalTo(true));
 	}
 
@@ -55,6 +56,10 @@ public class TestBishop {
 
 	private Position position(final int column, final int row) {
 		return new Position(column, row);
+	}
+
+	private StandardBoardBuilder board() {
+		return new StandardBoardBuilder();
 	}
 
 }

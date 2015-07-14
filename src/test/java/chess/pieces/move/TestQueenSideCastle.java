@@ -11,7 +11,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import chess.Board;
-import chess.StandardBoard;
+import chess.StandardBoardBuilder;
 import chess.pieces.Bishop;
 import chess.pieces.King;
 import chess.pieces.Piece;
@@ -26,21 +26,25 @@ public class TestQueenSideCastle {
 	@Test
 	public void cannotCastleIfInterveningSpacesAreAttacked() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
-		final Board board = new StandardBoard(whiteKing, whiteRook, new Rook(BLACK, new Position(4, 5)));
+		final Board board = board()
+				.withPieces(whiteKing, whiteRook, new Rook(BLACK, new Position(4, 5)))
+				.build();
 		assertThat(castle.isIllegal(board), equalTo(true));
 	}
 
 	@Test
 	public void cannotCastleIfKingIsInCheck() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
-		final Board board = new StandardBoard(whiteKing, whiteRook, new Rook(BLACK, new Position(5, 5)));
+		final Board board = board()
+				.withPieces(whiteKing, whiteRook, new Rook(BLACK, new Position(5, 5)))
+				.build();
 		assertThat(castle.isIllegal(board), equalTo(true));
 	}
 
 	@Test
 	public void movesPiecesToCorrectPositions() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
-		final Board board = new StandardBoard(whiteKing, whiteRook);
+		final Board board = board().withPieces(whiteKing, whiteRook).build();
 		final Set<Piece> updatedPieces = new HashSet<>();
 		updatedPieces.add(new King(WHITE, new Position(3, 1)));
 		updatedPieces.add(new Rook(WHITE, new Position(4, 1)));
@@ -50,17 +54,16 @@ public class TestQueenSideCastle {
 	@Test
 	public void cannotCastleIfInterveningSpacesAreOccupied() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
-		final Board board = new StandardBoard(
-				whiteKing,
-				whiteRook,
-				new Bishop(BLACK, new Position(4, 1)));
+		final Board board = board()
+				.withPieces(whiteKing, whiteRook, new Bishop(BLACK, new Position(4, 1)))
+				.build();
 		assertThat(castle.isIllegal(board), equalTo(true));
 	}
 
 	@Test
 	public void cannotCastleIfRookHasMoved() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
-		Board board = new StandardBoard(whiteKing, whiteRook);
+		Board board = board().withPieces(whiteKing, whiteRook).build();
 		board = board.play(new SimpleMove(WHITE.queenSideRookPosition(), new Position(2, 1)));
 		board = board.play(new SimpleMove(new Position(2, 1), WHITE.queenSideRookPosition()));
 		assertThat(castle.isIllegal(board), equalTo(true));
@@ -69,7 +72,7 @@ public class TestQueenSideCastle {
 	@Test
 	public void cannotCastleIfQueenHasMoved() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
-		Board board = new StandardBoard(whiteKing, whiteRook);
+		Board board = board().withPieces(whiteKing, whiteRook).build();
 		board = board.play(new SimpleMove(WHITE.kingPosition(), new Position(5, 2)));
 		board = board.play(new SimpleMove(new Position(5, 2), WHITE.kingPosition()));
 		assertThat(castle.isIllegal(board), equalTo(true));
@@ -78,8 +81,12 @@ public class TestQueenSideCastle {
 	@Test
 	public void canCastleIfThereIsSpaceBetweenQueenAndRook() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
-		final Board board = new StandardBoard(whiteKing, whiteRook);
+		final Board board = board().withPieces(whiteKing, whiteRook).build();
 		assertThat(castle.isIllegal(board), equalTo(false));
+	}
+
+	private StandardBoardBuilder board() {
+		return new StandardBoardBuilder();
 	}
 
 }

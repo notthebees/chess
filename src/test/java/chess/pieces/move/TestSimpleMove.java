@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import chess.Board;
 import chess.StandardBoard;
+import chess.StandardBoardBuilder;
 import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
@@ -55,10 +56,9 @@ public class TestSimpleMove {
 		final Piece someOtherPiece = new Pawn(BLACK, at(4, 2));
 		final Piece movedPiece = new Queen(WHITE, at(8, 1));
 
-		final StandardBoard board = new StandardBoard(
-				attackingPiece,
-				capturedPiece,
-				someOtherPiece);
+		final StandardBoard board = board()
+				.withPieces(attackingPiece, capturedPiece, someOtherPiece)
+				.build();
 
 		assertThat(move.updatePieces(board), containsInAnyOrder(movedPiece, someOtherPiece));
 	}
@@ -67,10 +67,11 @@ public class TestSimpleMove {
 	public void cannotMoveIfOwnKingWouldBeInCheck() {
 		final SimpleMove move = new SimpleMove(from(6, 1), to(6, 2));
 
-		final StandardBoard board = new StandardBoard(
+		final Board board = board().withPieces(
 				new King(BLACK, at(5, 1)),
 				new Queen(BLACK, at(6, 1)),
-				new Queen(WHITE, at(8, 1)));
+				new Queen(WHITE, at(8, 1)))
+				.build();
 
 		assertThat(move.isIllegal(board), equalTo(true));
 	}
@@ -79,16 +80,16 @@ public class TestSimpleMove {
 	public void cannotMoveIfPositionOccupiedByPieceOfSameColour() {
 		final SimpleMove move = new SimpleMove(from(1, 1), to(4, 4));
 
-		final StandardBoard board = new StandardBoard(
-				new Queen(BLACK, at(1, 1)),
-				new King(BLACK, at(4, 4)));
+		final StandardBoard board = board()
+				.withPieces(new Queen(BLACK, at(1, 1)), new King(BLACK, at(4, 4)))
+				.build();
 
 		assertThat(move.isIllegal(board), equalTo(true));
 	}
 
 	@Test
 	public void cannotMovePieceOffBoard() {
-		final StandardBoard board = new StandardBoard(new Queen(BLACK, new Position(1, 1)));
+		final StandardBoard board = board().withPieces(new Queen(BLACK, at(1, 1))).build();
 
 		final SimpleMove aMove = new SimpleMove(from(1, 1), to(1, 0));
 		final SimpleMove anotherMove = new SimpleMove(from(1, 1), to(9, 9));
@@ -107,6 +108,10 @@ public class TestSimpleMove {
 
 	private Position to(final int column, final int row) {
 		return new Position(column, row);
+	}
+
+	private StandardBoardBuilder board() {
+		return new StandardBoardBuilder();
 	}
 
 }

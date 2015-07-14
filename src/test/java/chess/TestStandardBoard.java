@@ -20,10 +20,11 @@ public class TestStandardBoard {
 
 	@Test
 	public void saysIfSpecificColourIsInCheck() {
-		final StandardBoard board = new StandardBoard(
+		final StandardBoard board = board().withPieces(
 				new King(WHITE, at(3, 4)),
 				new Rook(WHITE, at(4, 4)),
-				new King(BLACK, at(6, 4)));
+				new King(BLACK, at(6, 4)))
+				.build();
 
 		assertThat(board.isInCheck(BLACK), equalTo(true));
 		assertThat(board.isInCheck(WHITE), equalTo(false));
@@ -31,26 +32,26 @@ public class TestStandardBoard {
 
 	@Test
 	public void saysIfPositionIsAttackedBySpecificColour() {
-		final StandardBoard board = new StandardBoard(
+		final StandardBoard board = board().withPieces(
 				new Bishop(WHITE, at(3, 4)),
 				new Rook(WHITE, at(4, 4)),
-				new Bishop(BLACK, at(6, 4)));
+				new Bishop(BLACK, at(6, 4)))
+				.build();
 
-		assertThat(board.isAttackedBy(WHITE, position(2, 5)), equalTo(true));
-		assertThat(board.isAttackedBy(WHITE, position(7, 5)), equalTo(false));
-		assertThat(board.isAttackedBy(WHITE, position(3, 4)), equalTo(true));
-		assertThat(board.isAttackedBy(WHITE, position(6, 4)), equalTo(true));
-		assertThat(board.isAttackedBy(WHITE, position(4, 6)), equalTo(true));
-		assertThat(board.isAttackedBy(BLACK, position(4, 6)), equalTo(true));
+		assertThat(board.isAttackedBy(WHITE, at(2, 5)), equalTo(true));
+		assertThat(board.isAttackedBy(WHITE, at(7, 5)), equalTo(false));
+		assertThat(board.isAttackedBy(WHITE, at(3, 4)), equalTo(true));
+		assertThat(board.isAttackedBy(WHITE, at(6, 4)), equalTo(true));
+		assertThat(board.isAttackedBy(WHITE, at(4, 6)), equalTo(true));
+		assertThat(board.isAttackedBy(BLACK, at(4, 6)), equalTo(true));
 	}
 
 	@Test
 	public void listsWhichPositionsAPieceIsAttacking() {
 		final Bishop bishop = new Bishop(WHITE, at(3, 4));
-		final StandardBoard board = new StandardBoard(
-				bishop,
-				new Pawn(WHITE, at(5, 2)),
-				new Pawn(BLACK, at(6, 7)));
+		final StandardBoard board = board()
+				.withPieces(bishop, new Pawn(WHITE, at(5, 2)), new Pawn(BLACK, at(6, 7)))
+				.build();
 
 		assertThat(board.positionsAttackedBy(bishop),
 				containsInAnyOrder(position(1, 2), position(1, 6), position(2, 3), position(2, 5),
@@ -59,9 +60,9 @@ public class TestStandardBoard {
 
 	@Test
 	public void checksIfPositionIsOccupied() {
-		final StandardBoard board = new StandardBoard(
-				new Pawn(BLACK, at(1, 2)),
-				new Pawn(WHITE, at(2, 3)));
+		final StandardBoard board = board()
+				.withPieces(new Pawn(BLACK, at(1, 2)), new Pawn(WHITE, at(2, 3)))
+				.build();
 
 		assertThat(board.isOccupiedBy(BLACK, at(1, 2)), equalTo(true));
 		assertThat(board.isOccupiedAt(at(2, 3)), equalTo(true));
@@ -69,11 +70,11 @@ public class TestStandardBoard {
 
 	@Test
 	public void returnsNewBoardWithMovedPiece() {
-		final StandardBoard board = new StandardBoard(new King(BLACK, at(1, 1)));
+		final StandardBoard board = board().withPiece(new King(BLACK, at(1, 1))).build();
 
 		final Move move = new SimpleMove(from(1, 1), to(1, 2));
 
-		final Board finalBoard = new StandardBoard(new King(BLACK, at(1, 2)));
+		final Board finalBoard = board().withPiece(new King(BLACK, at(1, 2))).build();
 		assertThat(board.play(move), equalTo(finalBoard));
 	}
 
@@ -91,6 +92,10 @@ public class TestStandardBoard {
 
 	private Position to(final int column, final int row) {
 		return new Position(column, row);
+	}
+
+	private StandardBoardBuilder board() {
+		return new StandardBoardBuilder();
 	}
 
 }

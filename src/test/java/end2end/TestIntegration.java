@@ -10,7 +10,7 @@ import org.junit.Test;
 import chess.Board;
 import chess.ChessGame;
 import chess.Game;
-import chess.StandardBoard;
+import chess.StandardBoardBuilder;
 import chess.pieces.King;
 import chess.pieces.Piece;
 import chess.pieces.Position;
@@ -23,22 +23,27 @@ public class TestIntegration {
 		final Piece whiteKing = new King(WHITE, position(5, 1));
 		final Piece blackKing = new King(BLACK, position(4, 8));
 
-		final Board board = new StandardBoard(whiteKing, blackKing);
+		final Board board = board().withPieces(whiteKing, blackKing).build();
 
 		final Game game = new ChessGame(board);
 
 		game.play(new SimpleMove(position(5, 1), position(6, 2)));
 		game.play(new SimpleMove(position(4, 8), position(5, 8)));
 
-		final Board finalBoard = new StandardBoard(
+		final Board finalBoard = board().withPieces(
 				new King(WHITE, position(6, 2)),
-				new King(BLACK, position(5, 8)));
+				new King(BLACK, position(5, 8)))
+				.build();
 
 		assertThat(game.currentBoard(), equalTo(finalBoard));
 	}
 
 	private Position position(final int column, final int row) {
 		return new Position(column, row);
+	}
+
+	private StandardBoardBuilder board() {
+		return new StandardBoardBuilder();
 	}
 
 }

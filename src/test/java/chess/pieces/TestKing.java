@@ -8,11 +8,11 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.Test;
 
 import chess.Board;
-import chess.StandardBoard;
+import chess.StandardBoardBuilder;
 
 public class TestKing {
 
-	private final Board emptyBoard = new StandardBoard();
+	private final Board emptyBoard = board().build();
 
 	@Test
 	public void recordsIfItHasMoved() {
@@ -26,7 +26,7 @@ public class TestKing {
 	@Test
 	public void moveIllegalIfDestinationOccupiedByFriendlyPiece() {
 		final King king = new King(BLACK, new Position(1, 1));
-		final Board board = new StandardBoard(king, new Pawn(BLACK, position(1,  2)));
+		final Board board = board().withPieces(king, new Pawn(BLACK, position(1,  2))).build();
 		assertThat(king.moveIsIllegal(position(1, 2), board), equalTo(true));
 	}
 
@@ -52,6 +52,10 @@ public class TestKing {
 
 	private Position position(final int column, final int row) {
 		return new Position(column, row);
+	}
+
+	private StandardBoardBuilder board() {
+		return new StandardBoardBuilder();
 	}
 
 }
