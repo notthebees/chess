@@ -12,6 +12,14 @@ public enum Colour {
 		this.forwardStep = forwardStep;
 	}
 
+	public Colour opposite() {
+		if (this == WHITE) {
+			return BLACK;
+		} else {
+			return WHITE;
+		}
+	}
+
 	public int backRow() {
 		return backRow;
 	}
