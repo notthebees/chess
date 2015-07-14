@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import chess.pieces.Colour;
+import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import chess.pieces.Position;
 import chess.pieces.move.Move;
@@ -35,11 +36,20 @@ public class StandardBoard implements Board {
 		final Set<Position> allPositions = allPositions();
 		final Set<Position> attackedPositions = new HashSet<>();
 		for (final Position position : allPositions) {
-			if (! piece.moveIsIllegal(position, this)) {
+			if (! piece.moveIsIllegal(position, boardWithOppositeColouredPieces(piece))) {
 				attackedPositions.add(position);
 			}
 		}
 		return attackedPositions;
+	}
+
+	private Board boardWithOppositeColouredPieces(final Piece attackingPiece) {
+		final Colour oppositeColour = attackingPiece.colour().opposite();
+		final Set<Piece> oppositeColouredPieces = new HashSet<>();
+		for (final Piece piece : pieces) {
+			oppositeColouredPieces.add(new Pawn(oppositeColour, piece.position()));
+		}
+		return new StandardBoard(oppositeColouredPieces);
 	}
 
 	private Set<Position> allPositions() {
