@@ -10,7 +10,6 @@ import org.junit.Test;
 import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Position;
-import chess.pieces.Queen;
 import chess.pieces.move.Move;
 import chess.pieces.move.SimpleMove;
 
@@ -24,23 +23,6 @@ public class TestStandardBoard {
 
 		assertThat(board.isOccupiedBy(BLACK, at(1, 2)), equalTo(true));
 		assertThat(board.isOccupiedAt(at(2, 3)), equalTo(true));
-	}
-
-	@Test
-	public void cannotMoveIfPositionOccupiedByPieceOfSameColour() {
-		final StandardBoard board = new StandardBoard(
-				new Queen(BLACK, at(1, 1)),
-				new King(BLACK, at(4, 4)));
-
-		assertThat(board.play(new SimpleMove(from(1, 1), to(4, 4))), equalTo(board));
-	}
-
-	@Test
-	public void cannotMovePieceOffBoard() {
-		final StandardBoard board = new StandardBoard(new Queen(BLACK, new Position(1, 1)));
-
-		assertThat(board.play(new SimpleMove(from(1, 1), to(1, 0))), equalTo(board));
-		assertThat(board.play(new SimpleMove(from(1, 1), to(9, 9))), equalTo(board));
 	}
 
 	@Test
