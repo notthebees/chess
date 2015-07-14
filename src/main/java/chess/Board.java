@@ -15,6 +15,7 @@ public interface Board {
 	boolean isOccupiedAt(Position position);
 	Piece pieceAt(Position position);
 	boolean isOccupiedBy(Colour colour, Position position);
-	Set<Position> spacesAttackedBy(Piece piece);
+	Set<Position> positionsAttackedBy(Piece piece);
+	boolean isAttackedBy(Colour colour, Position position);
 
 }

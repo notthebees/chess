@@ -32,7 +32,17 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
-	public Set<Position> spacesAttackedBy(final Piece piece) {
+	public boolean isAttackedBy(final Colour colour, final Position position) {
+		for (final Piece piece : pieces) {
+			if (piece.colour().equals(colour) & positionsAttackedBy(piece).contains(position)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public Set<Position> positionsAttackedBy(final Piece piece) {
 		final Set<Position> allPositions = allPositions();
 		final Set<Position> attackedPositions = new HashSet<>();
 		for (final Position position : allPositions) {

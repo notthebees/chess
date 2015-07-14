@@ -12,10 +12,26 @@ import chess.pieces.Bishop;
 import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Position;
+import chess.pieces.Rook;
 import chess.pieces.move.Move;
 import chess.pieces.move.SimpleMove;
 
 public class TestStandardBoard {
+
+	@Test
+	public void saysIfPositionIsAttackedBySpecificColour() {
+		final StandardBoard board = new StandardBoard(
+				new Bishop(WHITE, at(3, 4)),
+				new Rook(WHITE, at(4, 4)),
+				new Bishop(BLACK, at(6, 4)));
+
+		assertThat(board.isAttackedBy(WHITE, position(2, 5)), equalTo(true));
+		assertThat(board.isAttackedBy(WHITE, position(7, 5)), equalTo(false));
+		assertThat(board.isAttackedBy(WHITE, position(3, 4)), equalTo(true));
+		assertThat(board.isAttackedBy(WHITE, position(6, 4)), equalTo(true));
+		assertThat(board.isAttackedBy(WHITE, position(4, 6)), equalTo(true));
+		assertThat(board.isAttackedBy(BLACK, position(4, 6)), equalTo(true));
+	}
 
 	@Test
 	public void listsWhichPositionsAPieceIsAttacking() {
@@ -25,7 +41,7 @@ public class TestStandardBoard {
 				new Pawn(WHITE, at(5, 2)),
 				new Pawn(BLACK, at(6, 7)));
 
-		assertThat(board.spacesAttackedBy(bishop),
+		assertThat(board.positionsAttackedBy(bishop),
 				containsInAnyOrder(position(1, 2), position(1, 6), position(2, 3), position(2, 5),
 						position(4, 3), position(4, 5), position(5, 2), position(5, 6), position(6, 7)));
 	}
