@@ -35,11 +35,14 @@ public class King implements Piece {
 	}
 
 	@Override
-	public boolean moveIsIllegal(final Position position, final Board board) {
-		if (board.isOccupiedBy(colour, position)) {
+	public boolean moveIsIllegal(final Position destination, final Board board) {
+		if (destination.equals(position)) {
 			return true;
 		}
-		return columnTooFar(position) | rowTooFar(position);
+		if (board.isOccupiedBy(colour, destination)) {
+			return true;
+		}
+		return columnTooFar(destination) | rowTooFar(destination);
 	}
 
 	private boolean rowTooFar(final Position position) {

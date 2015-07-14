@@ -35,14 +35,17 @@ public class Rook implements Piece {
 	}
 
 	@Override
-	public boolean moveIsIllegal(final Position position, final Board board) {
-		if (! (verticalMove(position) | horizontalMove(position))) {
+	public boolean moveIsIllegal(final Position destination, final Board board) {
+		if (destination.equals(position)) {
 			return true;
 		}
-		if (board.isOccupiedBy(colour, position)) {
+		if (! (verticalMove(destination) | horizontalMove(destination))) {
 			return true;
 		}
-		if (routeIsNotClear(position, board)) {
+		if (board.isOccupiedBy(colour, destination)) {
+			return true;
+		}
+		if (routeIsNotClear(destination, board)) {
 			return true;
 		}
 		return false;

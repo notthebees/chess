@@ -29,12 +29,15 @@ public class Knight implements Piece {
 	}
 
 	@Override
-	public boolean moveIsIllegal(final Position position, final Board board) {
-		if (board.isOccupiedBy(colour, position)) {
+	public boolean moveIsIllegal(final Position destination, final Board board) {
+		if (destination.equals(position)) {
 			return true;
 		}
-		return ! ((columnDifference(position) == 2) & (rowDifference(position) == 1)
-				| (columnDifference(position) == 1) & (rowDifference(position) == 2));
+		if (board.isOccupiedBy(colour, destination)) {
+			return true;
+		}
+		return ! ((columnDifference(destination) == 2) & (rowDifference(destination) == 1)
+				| (columnDifference(destination) == 1) & (rowDifference(destination) == 2));
 	}
 
 	private int rowDifference(final Position position) {

@@ -35,6 +35,9 @@ public class Pawn implements Piece{
 
 	@Override
 	public boolean moveIsIllegal(final Position destination, final Board board) {
+		if (destination.equals(position)) {
+			return true;
+		}
 		if (board.isOccupiedBy(colour, destination)) {
 			return true;
 		}
