@@ -34,11 +34,23 @@ public class StandardBoard implements Board {
 
 	@Override
 	public boolean isInCheck(final Colour colour) {
+		if (hasNoKing(colour)) {
+			return false;
+		}
 		final Piece relevantKing = kingOfColour(colour);
 		if (isAttackedBy(colour.opposite(), relevantKing.position())) {
 			return true;
 		}
 		return false;
+	}
+
+	private boolean hasNoKing(final Colour colour) {
+		for (final Piece piece : pieces) {
+			if (piece.getClass().equals(King.class) & piece.colour().equals(colour)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private Piece kingOfColour(final Colour colour) {
