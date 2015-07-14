@@ -33,6 +33,10 @@ public enum Colour {
 		return backRow + forwardStep;
 	}
 
+	public int endRow() {
+		return backRow + 7 * forwardStep;
+	}
+
 	public int forwardStep() {
 		return forwardStep;
 	}
