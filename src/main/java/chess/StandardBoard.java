@@ -31,6 +31,28 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
+	public Set<Position> spacesAttackedBy(final Piece piece) {
+		final Set<Position> allPositions = allPositions();
+		final Set<Position> attackedPositions = new HashSet<>();
+		for (final Position position : allPositions) {
+			if (! piece.moveIsIllegal(position, this)) {
+				attackedPositions.add(position);
+			}
+		}
+		return attackedPositions;
+	}
+
+	private Set<Position> allPositions() {
+		final Set<Position> positions = new HashSet<>();
+		for (int column=1; column<=8; column++) {
+			for (int row=1; row<=8; row++) {
+				positions.add(new Position(column, row));
+			}
+		}
+		return positions;
+	}
+
+	@Override
 	public Set<Piece> pieces() {
 		return new HashSet<>(pieces);
 	}
