@@ -19,6 +19,17 @@ import chess.pieces.move.SimpleMove;
 public class TestStandardBoard {
 
 	@Test
+	public void saysIfSpecificColourIsInCheck() {
+		final StandardBoard board = new StandardBoard(
+				new King(WHITE, at(3, 4)),
+				new Rook(WHITE, at(4, 4)),
+				new King(BLACK, at(6, 4)));
+
+		assertThat(board.isInCheck(BLACK), equalTo(true));
+		assertThat(board.isInCheck(WHITE), equalTo(false));
+	}
+
+	@Test
 	public void saysIfPositionIsAttackedBySpecificColour() {
 		final StandardBoard board = new StandardBoard(
 				new Bishop(WHITE, at(3, 4)),

@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import chess.pieces.Colour;
+import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import chess.pieces.Position;
@@ -29,6 +30,24 @@ public class StandardBoard implements Board {
 		for (final Piece piece : pieces) {
 			this.pieces.add(piece);
 		}
+	}
+
+	@Override
+	public boolean isInCheck(final Colour colour) {
+		final Piece relevantKing = kingOfColour(colour);
+		if (isAttackedBy(colour.opposite(), relevantKing.position())) {
+			return true;
+		}
+		return false;
+	}
+
+	private Piece kingOfColour(final Colour colour) {
+		for (final Piece piece : pieces) {
+			if (piece.getClass().equals(King.class) & piece.colour().equals(colour)) {
+				return piece;
+			}
+		}
+		return null;
 	}
 
 	@Override
