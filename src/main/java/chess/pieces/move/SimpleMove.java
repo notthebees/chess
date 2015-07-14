@@ -4,6 +4,8 @@ import java.util.Set;
 
 import chess.Board;
 import chess.StandardBoard;
+import chess.pieces.Colour;
+import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import chess.pieces.Position;
 
@@ -21,13 +23,22 @@ public class SimpleMove implements Move {
 	public Set<Piece> updatePieces(final Board board) {
 		final Set<Piece> newPieces = board.pieces();
 		removeCapturedPieces(board, newPieces);
-		movePiece(board.pieceAt(from), newPieces);
+		movePiece(board.pieceAt(from), newPieces, board);
 		return newPieces;
 	}
 
-	private void movePiece(final Piece movingPiece, final Set<Piece> newPieces) {
+	private void movePiece(final Piece movingPiece, final Set<Piece> newPieces, final Board board) {
 		newPieces.remove(movingPiece);
-		newPieces.add(movingPiece.moveTo(to));
+		if (pawnReachingEnd(movingPiece)) {
+			newPieces.add(board.pawnReplacementAt(to));
+		} else {
+			newPieces.add(movingPiece.moveTo(to));
+		}
+	}
+
+	private boolean pawnReachingEnd(final Piece movingPiece) {
+		final Colour colour = movingPiece.colour();
+		return movingPiece.getClass().equals(Pawn.class) & to.row == colour.endRow();
 	}
 
 	private void removeCapturedPieces(final Board board, final Set<Piece> newPieces) {
