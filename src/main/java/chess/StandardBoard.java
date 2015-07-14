@@ -5,8 +5,8 @@ import static chess.pieces.Colour.NULL_COLOUR;
 import static chess.pieces.Colour.WHITE;
 import static java.util.Arrays.asList;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -24,17 +24,13 @@ public class StandardBoard implements Board {
 	private final Set<Piece> pieces = new HashSet<>();
 	private final Colour lastToMove;
 
-	private StandardBoard(final Set<Piece> pieces, final Colour lastToMove) {
+	private StandardBoard(final Collection<Piece> pieces, final Colour lastToMove) {
 		this.pieces.addAll(pieces);
 		this.lastToMove = lastToMove;
 	}
 
-	public StandardBoard(final Set<Piece> pieces) {
+	public StandardBoard(final Collection<Piece> pieces) {
 		this(pieces, NULL_COLOUR);
-	}
-
-	public StandardBoard(final List<Piece> pieces) {
-		this(new HashSet<>(pieces), NULL_COLOUR);
 	}
 
 	public StandardBoard(final Piece...pieces) {
