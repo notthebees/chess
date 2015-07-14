@@ -12,6 +12,7 @@ import chess.pieces.Pawn;
 import chess.pieces.Position;
 import chess.pieces.Queen;
 import chess.pieces.move.Move;
+import chess.pieces.move.SimpleMove;
 
 public class TestStandardBoard {
 
@@ -31,22 +32,22 @@ public class TestStandardBoard {
 				new Queen(BLACK, at(1, 1)),
 				new King(BLACK, at(4, 4)));
 
-		assertThat(board.play(new Move(from(1, 1), to(4, 4))), equalTo(board));
+		assertThat(board.play(new SimpleMove(from(1, 1), to(4, 4))), equalTo(board));
 	}
 
 	@Test
 	public void cannotMovePieceOffBoard() {
 		final StandardBoard board = new StandardBoard(new Queen(BLACK, new Position(1, 1)));
 
-		assertThat(board.play(new Move(from(1, 1), to(1, 0))), equalTo(board));
-		assertThat(board.play(new Move(from(1, 1), to(9, 9))), equalTo(board));
+		assertThat(board.play(new SimpleMove(from(1, 1), to(1, 0))), equalTo(board));
+		assertThat(board.play(new SimpleMove(from(1, 1), to(9, 9))), equalTo(board));
 	}
 
 	@Test
 	public void returnsNewBoardWithMovedPiece() {
 		final StandardBoard board = new StandardBoard(new King(BLACK, at(1, 1)));
 
-		final Move move = new Move(from(1, 1), to(1, 2));
+		final Move move = new SimpleMove(from(1, 1), to(1, 2));
 
 		final Board finalBoard = new StandardBoard(new King(BLACK, at(1, 2)));
 		assertThat(board.play(move), equalTo(finalBoard));

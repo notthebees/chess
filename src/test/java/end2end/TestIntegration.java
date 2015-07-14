@@ -14,7 +14,7 @@ import chess.StandardBoard;
 import chess.pieces.King;
 import chess.pieces.Piece;
 import chess.pieces.Position;
-import chess.pieces.move.Move;
+import chess.pieces.move.SimpleMove;
 
 public class TestIntegration {
 
@@ -27,8 +27,8 @@ public class TestIntegration {
 
 		final Game game = new ChessGame(board);
 
-		game.play(new Move(position(5, 1), position(6, 2)));
-		game.play(new Move(position(4, 8), position(5, 8)));
+		game.play(new SimpleMove(position(5, 1), position(6, 2)));
+		game.play(new SimpleMove(position(4, 8), position(5, 8)));
 
 		final Board finalBoard = new StandardBoard(
 				new King(WHITE, position(6, 2)),
