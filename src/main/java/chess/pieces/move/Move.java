@@ -1,5 +1,6 @@
 package chess.pieces.move;
 
+import chess.Board;
 import chess.pieces.Position;
 
 public class Move {
@@ -12,8 +13,11 @@ public class Move {
 		this.to = to;
 	}
 
-	public boolean isIllegal() {
+	public boolean isIllegal(final Board board) {
 		if (moveIsOffBoard()) {
+			return true;
+		}
+		if (board.pieceAt(from).moveIsIllegal(to, board)) {
 			return true;
 		}
 		return false;

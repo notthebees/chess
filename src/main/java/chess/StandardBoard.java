@@ -29,10 +29,7 @@ public class StandardBoard implements Board {
 
 	@Override
 	public StandardBoard play(final Move move) {
-		if (move.isIllegal()) {
-			return this;
-		}
-		if (pieceAt(move.from).moveIsIllegal(move.to, this)) {
+		if (move.isIllegal(this)) {
 			return this;
 		}
 		return new StandardBoard(newPieces(move));
