@@ -11,15 +11,27 @@ public class King implements Piece {
 
 	private final Colour colour;
 	private final Position position;
+	private final boolean hasMoved;
 
-	public King(final Colour colour, final Position position) {
+	private King(final Colour colour, final Position position, final boolean hasMoved) {
 		this.colour = colour;
 		this.position = position;
+		this.hasMoved = hasMoved;
+
+	}
+
+	public King(final Colour colour, final Position position) {
+		this(colour, position, false);
+	}
+
+	@Override
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 
 	@Override
 	public King moveTo(final Position position) {
-		return new King(colour, position);
+		return new King(colour, position, true);
 	}
 
 	@Override
@@ -55,12 +67,23 @@ public class King implements Piece {
 
 	@Override
 	public boolean equals(final Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+		if (obj instanceof King) {
+			final King other = (King) obj;
+			return new EqualsBuilder()
+			.append(colour, other.colour)
+			.append(position, other.position)
+			.isEquals();
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
+		return new HashCodeBuilder()
+		.append(colour)
+		.append(position)
+		.toHashCode();
 	}
 
 }

@@ -12,15 +12,21 @@ public class Bishop implements Piece {
 
 	private final Colour colour;
 	private final Position position;
+	private final boolean hasMoved;
 
-	public Bishop(final Colour colour, final Position position) {
+	private Bishop(final Colour colour, final Position position, final boolean hasMoved) {
 		this.colour = colour;
 		this.position = position;
+		this.hasMoved = hasMoved;
+	}
+
+	public Bishop(final Colour colour, final Position position) {
+		this(colour, position, false);
 	}
 
 	@Override
 	public Bishop moveTo(final Position position) {
-		return new Bishop(colour, position);
+		return new Bishop(colour, position, true);
 	}
 
 	@Override
@@ -66,6 +72,11 @@ public class Bishop implements Piece {
 	@Override
 	public Position position() {
 		return position;
+	}
+
+	@Override
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 
 	@Override

@@ -11,15 +11,21 @@ public class Knight implements Piece {
 
 	private final Colour colour;
 	private final Position position;
+	private final boolean hasMoved;
 
-	public Knight(final Colour colour, final Position position) {
+	private Knight(final Colour colour, final Position position, final boolean hasMoved) {
 		this.colour = colour;
 		this.position = position;
+		this.hasMoved = hasMoved;
+	}
+
+	public Knight(final Colour colour, final Position position) {
+		this(colour, position, false);
 	}
 
 	@Override
 	public Knight moveTo(final Position position) {
-		return new Knight(colour, position);
+		return new Knight(colour, position, true);
 	}
 
 	@Override
@@ -47,6 +53,11 @@ public class Knight implements Piece {
 	@Override
 	public Position position() {
 		return position;
+	}
+
+	@Override
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 
 	@Override

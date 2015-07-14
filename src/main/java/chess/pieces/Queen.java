@@ -12,15 +12,21 @@ public class Queen implements Piece {
 
 	private final Colour colour;
 	private final Position position;
+	private final boolean hasMoved;
 
-	public Queen(final Colour colour, final Position position) {
+	private Queen(final Colour colour, final Position position, final boolean hasMoved) {
 		this.colour = colour;
 		this.position = position;
+		this.hasMoved = hasMoved;
+	}
+
+	public Queen(final Colour colour, final Position position) {
+		this(colour, position, false);
 	}
 
 	@Override
 	public Queen moveTo(final Position position) {
-		return new Queen(colour, position);
+		return new Queen(colour, position, true);
 	}
 
 	@Override
@@ -102,6 +108,11 @@ public class Queen implements Piece {
 	@Override
 	public Position position() {
 		return position;
+	}
+
+	@Override
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 
 	@Override

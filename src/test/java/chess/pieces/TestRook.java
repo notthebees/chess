@@ -15,6 +15,15 @@ public class TestRook {
 	private final Board emptyBoard = new StandardBoard();
 
 	@Test
+	public void recordsIfItHasMoved() {
+		Rook rook = new Rook(WHITE, new Position(8, 1));
+		assertThat(rook.hasMoved(), equalTo(false));
+		rook = rook.moveTo(new Position(7, 1));
+		rook = rook.moveTo(new Position(8, 1));
+		assertThat(rook.hasMoved(), equalTo(true));
+	}
+
+	@Test
 	public void moveIllegalIfPathObstructedByAnyPiece() {
 		final Rook rook = new Rook(BLACK, new Position(4, 4));
 		final Board board = new StandardBoard(

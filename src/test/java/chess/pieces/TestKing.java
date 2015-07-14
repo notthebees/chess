@@ -1,6 +1,7 @@
 package chess.pieces;
 
 import static chess.pieces.Colour.BLACK;
+import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -14,6 +15,15 @@ public class TestKing {
 	private final Board emptyBoard = new StandardBoard();
 
 	@Test
+	public void recordsIfItHasMoved() {
+		King king = new King(WHITE, WHITE.kingPosition());
+		assertThat(king.hasMoved(), equalTo(false));
+		king = king.moveTo(WHITE.queenPosition());
+		king = king.moveTo(WHITE.kingPosition());
+		assertThat(king.hasMoved(), equalTo(true));
+	}
+
+	@Test
 	public void moveIllegalIfDestinationOccupiedByFriendlyPiece() {
 		final King king = new King(BLACK, new Position(1, 1));
 		final Board board = new StandardBoard(king, new Pawn(BLACK, position(1,  2)));
@@ -21,7 +31,7 @@ public class TestKing {
 	}
 
 	@Test
-	public void doesntMoveIfIllegal() {
+	public void testIllegalMoves() {
 		final King king = new King(BLACK, new Position(1, 1));
 
 		assertThat(king.moveIsIllegal(position(1, 3), emptyBoard), equalTo(true));
@@ -31,7 +41,7 @@ public class TestKing {
 	}
 
 	@Test
-	public void movesIfLegal() {
+	public void canMoveOneSpaceInAnyDirection() {
 		final King king = new King(BLACK, new Position(1, 1));
 
 		assertThat(king.moveIsIllegal(position(1, 2), emptyBoard), equalTo(false));

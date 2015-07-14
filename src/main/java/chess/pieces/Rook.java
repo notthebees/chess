@@ -12,15 +12,26 @@ public class Rook implements Piece {
 
 	private final Colour colour;
 	private final Position position;
+	private final boolean hasMoved;
 
-	public Rook(final Colour colour, final Position position) {
+	private Rook(final Colour colour, final Position position, final boolean hasMoved) {
 		this.colour = colour;
 		this.position = position;
+		this.hasMoved = hasMoved;
+	}
+
+	public Rook(final Colour colour, final Position position) {
+		this(colour, position, false);
+	}
+
+	@Override
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 
 	@Override
 	public Rook moveTo(final Position position) {
-		return new Rook(colour, position);
+		return new Rook(colour, position, true);
 	}
 
 	@Override

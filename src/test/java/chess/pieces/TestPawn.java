@@ -15,6 +15,14 @@ public class TestPawn {
 	private final Board emptyBoard = new StandardBoard();
 
 	@Test
+	public void recordsIfItHasMoved() {
+		Pawn pawn = new Pawn(WHITE, new Position(1, 2));
+		assertThat(pawn.hasMoved(), equalTo(false));
+		pawn = pawn.moveTo(new Position(1, 3));
+		assertThat(pawn.hasMoved(), equalTo(true));
+	}
+
+	@Test
 	public void canMoveTwoSpacesOffStartingSquare() {
 		final Pawn whitePawn = new Pawn(WHITE, position(1, 2));
 		final Pawn blackPawn = new Pawn(BLACK, position(1, 7));

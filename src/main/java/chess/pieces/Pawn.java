@@ -11,15 +11,26 @@ public class Pawn implements Piece{
 
 	private final Colour colour;
 	private final Position position;
+	private final boolean hasMoved;
 
-	public Pawn(final Colour colour, final Position position) {
+	private Pawn(final Colour colour, final Position position, final boolean hasMoved) {
 		this.colour = colour;
 		this.position = position;
+		this.hasMoved = hasMoved;
+	}
+
+	public Pawn(final Colour colour, final Position position) {
+		this(colour, position, false);
+	}
+
+	@Override
+	public boolean hasMoved() {
+		return hasMoved;
 	}
 
 	@Override
 	public Pawn moveTo(final Position position) {
-		return new Pawn(colour, position);
+		return new Pawn(colour, position, true);
 	}
 
 	@Override

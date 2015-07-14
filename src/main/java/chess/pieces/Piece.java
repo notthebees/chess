@@ -9,5 +9,6 @@ public interface Piece {
 	Position position();
 	Piece moveTo(Position position);
 	boolean moveIsIllegal(Position position, Board board);
+	boolean hasMoved();
 
 }
