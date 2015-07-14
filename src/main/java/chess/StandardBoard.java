@@ -11,6 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import chess.pieces.Colour;
 import chess.pieces.Piece;
 import chess.pieces.Position;
+import chess.pieces.move.Move;
 
 public class StandardBoard implements Board {
 

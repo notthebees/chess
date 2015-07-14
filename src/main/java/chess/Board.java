@@ -3,6 +3,7 @@ package chess;
 import chess.pieces.Colour;
 import chess.pieces.Piece;
 import chess.pieces.Position;
+import chess.pieces.move.Move;
 
 
 public interface Board {

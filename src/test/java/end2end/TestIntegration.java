@@ -10,11 +10,11 @@ import org.junit.Test;
 import chess.Board;
 import chess.ChessGame;
 import chess.Game;
-import chess.Move;
 import chess.StandardBoard;
 import chess.pieces.King;
 import chess.pieces.Piece;
 import chess.pieces.Position;
+import chess.pieces.move.Move;
 
 public class TestIntegration {
 

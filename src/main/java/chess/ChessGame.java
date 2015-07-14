@@ -1,5 +1,7 @@
 package chess;
 
+import chess.pieces.move.Move;
+
 
 public class ChessGame implements Game {
 

@@ -1,4 +1,4 @@
-package chess;
+package chess.pieces.move;
 
 import chess.pieces.Position;
 

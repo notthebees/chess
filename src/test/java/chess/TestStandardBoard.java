@@ -11,6 +11,7 @@ import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Position;
 import chess.pieces.Queen;
+import chess.pieces.move.Move;
 
 public class TestStandardBoard {
 
