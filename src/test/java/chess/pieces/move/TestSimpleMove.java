@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
 
+import chess.Board;
 import chess.StandardBoard;
 import chess.StandardBoardBuilder;
 import chess.pieces.King;
