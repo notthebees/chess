@@ -43,13 +43,11 @@ public enum Colour {
 	}
 
 	public Position kingPosition() {
-		final int kingColumn = backRow + 4*forwardStep;
-		return new Position(kingColumn, backRow);
+		return new Position(5, backRow);
 	}
 
 	public Position queenPosition() {
-		final int queenColumn = backRow + 3*forwardStep;
-		return new Position(queenColumn, backRow);
+		return new Position(4, backRow);
 	}
 
 	public Position kingSideRookPosition() {
