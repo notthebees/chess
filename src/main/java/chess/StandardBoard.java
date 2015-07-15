@@ -1,6 +1,6 @@
 package chess;
 
-import static chess.pieces.Colour.WHITE;
+import static java.util.Arrays.asList;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -19,20 +19,13 @@ import chess.pieces.move.Move;
 public class StandardBoard implements Board {
 
 	private final Set<Piece> pieces = new HashSet<>();
-	private final Colour toMove;
-
-	public StandardBoard(final Collection<Piece> pieces, final Colour toMove) {
-		this.pieces.addAll(pieces);
-		this.toMove = toMove;
-	}
 
 	public StandardBoard(final Collection<Piece> pieces) {
-		this(pieces, WHITE);
+		this.pieces.addAll(pieces);
 	}
 
-	@Override
-	public Colour toMove() {
-		return toMove;
+	public StandardBoard(final Piece...pieces) {
+		this(asList(pieces));
 	}
 
 	@Override
