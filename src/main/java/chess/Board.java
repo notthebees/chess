@@ -19,6 +19,5 @@ public interface Board {
 	boolean isAttackedBy(Colour colour, Position position);
 	boolean isInCheck(Colour colour);
 	Colour lastToMove();
-	Piece pawnReplacementAt(Position position);
 
 }

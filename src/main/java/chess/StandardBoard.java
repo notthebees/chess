@@ -186,10 +186,4 @@ public class StandardBoard implements Board {
 		.toHashCode();
 	}
 
-	@Override
-	public Piece pawnReplacementAt(final Position position) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
