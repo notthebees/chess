@@ -1,15 +1,21 @@
 package chess.pieces;
 
 public enum Colour {
-	WHITE (1, 1),
-	BLACK (8, -1);
+	WHITE (1, 1, 1),
+	BLACK (2, 8, -1);
 
 	private final int backRow;
 	private final int forwardStep;
+	private final int playerNumber;
 
-	Colour(final int backRow, final int forwardStep) {
+	Colour(final int playerNumber, final int backRow, final int forwardStep) {
+		this.playerNumber = playerNumber;
 		this.backRow = backRow;
 		this.forwardStep = forwardStep;
+	}
+
+	public int playerNumber() {
+		return playerNumber;
 	}
 
 	public Colour opposite() {
