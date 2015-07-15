@@ -18,6 +18,5 @@ public interface Board {
 	Set<Position> positionsAttackedBy(Piece piece);
 	boolean isAttackedBy(Colour colour, Position position);
 	boolean isInCheck(Colour colour);
-	Colour lastToMove();
 
 }
