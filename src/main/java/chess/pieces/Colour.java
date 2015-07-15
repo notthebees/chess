@@ -13,10 +13,6 @@ public enum Colour {
 		this.forwardStep = forwardStep;
 	}
 
-	public Colour nextToMove() {
-		return opposite();
-	}
-
 	public Colour opposite() {
 		if (this == WHITE) {
 			return BLACK;
