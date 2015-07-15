@@ -141,6 +141,23 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
+	public String print() {
+		final StringBuilder builder = new StringBuilder();
+		for (int row=1; row<=8; row++) {
+			for (int column=1; column<=8; column++) {
+				final Position position = new Position(column, row);
+				if (isOccupiedAt(position)) {
+					builder.append(pieceAt(position).print() + " ");
+				} else {
+					builder.append(".  ");
+				}
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
+	}
+
+	@Override
 	public String toString() {
 		return "Standard Board with " + pieces.toString();
 	}
