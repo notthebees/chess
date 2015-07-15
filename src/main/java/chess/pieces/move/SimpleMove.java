@@ -2,6 +2,9 @@ package chess.pieces.move;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import chess.Board;
 import chess.StandardBoard;
 import chess.pieces.Piece;
@@ -66,6 +69,21 @@ public class SimpleMove implements Move {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "Simple move from " + from + " to " + to;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 }
