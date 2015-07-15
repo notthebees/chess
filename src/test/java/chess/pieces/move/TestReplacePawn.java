@@ -1,7 +1,9 @@
 package chess.pieces.move;
 
+import static chess.pieces.Colour.BLACK;
 import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 
 import org.junit.Test;
@@ -11,10 +13,19 @@ import chess.StandardBoardBuilder;
 import chess.pieces.Bishop;
 import chess.pieces.King;
 import chess.pieces.Pawn;
+import chess.pieces.Piece;
 import chess.pieces.Position;
 import chess.pieces.Queen;
 
 public class TestReplacePawn {
+
+	@Test
+	public void replacesPawnWithSpecifiedPiece() {
+		final Piece replacementPiece = new Queen(WHITE, at(1, 8));
+		final ReplacePawn replacePawn = new ReplacePawn(at(1, 8), replacementPiece);
+		final Board board = board().withPiece(new Pawn(WHITE, at(1, 8))).build();
+		assertThat(replacePawn.updatePieces(board), contains(replacementPiece));
+	}
 
 	@Test
 	public void moveIllegalIfNoPieceAtPosition() {
@@ -35,8 +46,11 @@ public class TestReplacePawn {
 		final Board board = board().withPiece(new Pawn(WHITE, at(1, 8))).build();
 		final ReplacePawn replaceWithKing = new ReplacePawn(at(1, 8), new King(WHITE, at(1, 8)));
 		final ReplacePawn replaceWithPawn = new ReplacePawn(at(1, 8), new King(WHITE, at(1, 8)));
+		final ReplacePawn replaceWithBlackPiece = new ReplacePawn(at(1, 8), new Queen(BLACK, at(1, 8)));
+
 		assertThat(replaceWithKing.isIllegal(board), equalTo(true));
 		assertThat(replaceWithPawn.isIllegal(board), equalTo(true));
+		assertThat(replaceWithBlackPiece.isIllegal(board), equalTo(true));
 	}
 
 	@Test

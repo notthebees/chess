@@ -24,8 +24,10 @@ public class ReplacePawn implements Move {
 
 	@Override
 	public Set<Piece> updatePieces(final Board board) {
-		// TODO Auto-generated method stub
-		return null;
+		final Set<Piece> pieces = board.pieces();
+		pieces.remove(board.pieceAt(position));
+		pieces.add(replacementPiece);
+		return pieces;
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public class ReplacePawn implements Move {
 		if (pieceIsNotAPawn(board)) {
 			return true;
 		}
-		if (replacementPieceInvalid()) {
+		if (replacementPieceInvalid(board)) {
 			return true;
 		}
 		if (pawnNotAtEnd(board)) {
@@ -53,7 +55,17 @@ public class ReplacePawn implements Move {
 		return false;
 	}
 
-	private boolean replacementPieceInvalid() {
+	private boolean replacementPieceInvalid(final Board board) {
+		if (replacementPieceIsWrongColour(board)) {
+			return true;
+		}
+		if (replacementPieceIsWrongType()) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean replacementPieceIsWrongType() {
 		if (replacementPiece.getClass().equals(Queen.class)) {
 			return false;
 		}
@@ -67,6 +79,10 @@ public class ReplacePawn implements Move {
 			return false;
 		}
 		return true;
+	}
+
+	private boolean replacementPieceIsWrongColour(final Board board) {
+		return ! replacementPiece.colour().equals(board.pieceAt(position).colour());
 	}
 
 	private boolean pieceIsNotAPawn(final Board board) {
