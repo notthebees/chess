@@ -119,6 +119,11 @@ public class Queen implements Piece {
 	}
 
 	@Override
+	public String print() {
+		return "Q" + colour.playerNumber();
+	}
+
+	@Override
 	public String toString() {
 		return colour.toString() + " Queen @ " + position;
 	}

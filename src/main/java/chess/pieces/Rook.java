@@ -100,6 +100,11 @@ public class Rook implements Piece {
 	}
 
 	@Override
+	public String print() {
+		return "r" + colour.playerNumber();
+	}
+
+	@Override
 	public String toString() {
 		return colour.toString() + " Rook @ " + position;
 	}

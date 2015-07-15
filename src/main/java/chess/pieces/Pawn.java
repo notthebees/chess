@@ -101,6 +101,11 @@ public class Pawn implements Piece{
 	}
 
 	@Override
+	public String print() {
+		return "p" + colour.playerNumber();
+	}
+
+	@Override
 	public String toString() {
 		return colour.toString() + " Pawn @ " + position;
 	}

@@ -83,6 +83,11 @@ public class Bishop implements Piece {
 	}
 
 	@Override
+	public String print() {
+		return "b" + colour.playerNumber();
+	}
+
+	@Override
 	public String toString() {
 		return colour.toString() + " Bishop @ " + position;
 	}

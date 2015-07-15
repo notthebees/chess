@@ -64,6 +64,11 @@ public class King implements Piece {
 	}
 
 	@Override
+	public String print() {
+		return "K" + colour.playerNumber();
+	}
+
+	@Override
 	public String toString() {
 		return colour.toString() + " King @ " + position;
 	}

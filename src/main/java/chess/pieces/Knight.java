@@ -64,6 +64,11 @@ public class Knight implements Piece {
 	}
 
 	@Override
+	public String print() {
+		return "k" + colour.playerNumber();
+	}
+
+	@Override
 	public String toString() {
 		return colour.toString() + " Knight @ " + position;
 	}
