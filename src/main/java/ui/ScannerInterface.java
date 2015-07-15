@@ -23,23 +23,13 @@ public class ScannerInterface implements UserInterface {
 
 	@Override
 	public void getCommand() {
-		print("Enter command:");
+		final Board currentBoard = game.currentBoard();
+		print(currentBoard.print());
+		print("Enter move:");
 		final String input = scanner.next();
 		if (input.equals("quit")) {
 			System.exit(0);
 		}
-		if (input.equals("show")) {
-			final Board currentBoard = game.currentBoard();
-			print(currentBoard.print());
-		}
-		if (input.equals("move")) {
-			move();
-		}
-	}
-
-	private void move() {
-		print("Enter move:");
-		final String input = scanner.next();
 		if (input.contains("-")) {
 			final String[] positions = input.split("-");
 			final String from = positions[0];
