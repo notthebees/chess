@@ -12,6 +12,8 @@ import ui.Output;
 import ui.ScannerInterface;
 import chess.Board;
 import chess.Game;
+import chess.pieces.Position;
+import chess.pieces.move.SimpleMove;
 
 public class TestScannerInterface {
 	@Rule public final JUnitRuleMockery context = new JUnitRuleMockery();
@@ -19,6 +21,22 @@ public class TestScannerInterface {
 	@Mock private Game game;
 	@Mock private Output out;
 	@Mock private Board board;
+
+	@Test
+	public void playsSpecifiedMove() {
+		final String inputString = "move\ne2-e4";
+		System.setIn(new ByteArrayInputStream(inputString.getBytes()));
+
+		final ScannerInterface ui = new ScannerInterface(game, out);
+
+		context.checking(new Expectations() {{
+			oneOf(out).println("Enter command:");
+			oneOf(out).println("Enter move:");
+			oneOf(game).play(new SimpleMove(new Position(5, 2), new Position(5, 4)));
+		}});
+
+		ui.getCommand();
+	}
 
 	@Test
 	public void showsBoardOnRequest() {
