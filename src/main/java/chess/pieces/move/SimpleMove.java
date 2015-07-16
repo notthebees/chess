@@ -48,6 +48,9 @@ public class SimpleMove implements Move {
 		if (moveIsOffBoard()) {
 			return true;
 		}
+		if (! board.pieceAt(from).colour().equals(colour)) {
+			return true;
+		}
 		if (board.pieceAt(from).moveIsIllegal(to, board)) {
 			return true;
 		}
