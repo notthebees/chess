@@ -4,11 +4,17 @@ import static chess.pieces.Colour.BLACK;
 import static chess.pieces.Colour.WHITE;
 import static java.lang.Character.getNumericValue;
 import static java.util.regex.Pattern.matches;
+import chess.pieces.Bishop;
 import chess.pieces.Colour;
+import chess.pieces.Knight;
+import chess.pieces.Piece;
 import chess.pieces.Position;
+import chess.pieces.Queen;
+import chess.pieces.Rook;
 import chess.pieces.move.KingSideCastle;
 import chess.pieces.move.Move;
 import chess.pieces.move.QueenSideCastle;
+import chess.pieces.move.ReplacePawn;
 import chess.pieces.move.SimpleMove;
 
 public class MoveParser {
@@ -39,8 +45,40 @@ public class MoveParser {
 			return new KingSideCastle(castleColour(input));
 		} else if (matches(queensideCastlePattern, input)) {
 			return new QueenSideCastle(castleColour(input));
+		} else if (matches(pawnReplacementPattern, input)) {
+			return replacePawn(input);
 		} else {
 			return simpleMove(input);
+		}
+	}
+
+	private Move replacePawn(final String input) {
+		final String[] substrings = input.split("-");
+		final Position position = position(substrings[0]);
+		return new ReplacePawn(position, replacementPiece(substrings[1], position, replacementColour(position)));
+	}
+
+	private Piece replacementPiece(final String type, final Position position, final Colour colour) {
+		if (type.equals("Q")) {
+			return new Queen(colour, position);
+		}
+		if (type.equals("r")) {
+			return new Rook(colour, position);
+		}
+		if (type.equals("b")) {
+			return new Bishop(colour, position);
+		}
+		if (type.equals("k")) {
+			return new Knight(colour, position);
+		}
+		return null;
+	}
+
+	private Colour replacementColour(final Position position) {
+		if (position.row == 8) {
+			return WHITE;
+		} else {
+			return BLACK;
 		}
 	}
 

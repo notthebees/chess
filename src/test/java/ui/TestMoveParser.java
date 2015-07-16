@@ -8,13 +8,28 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.Test;
 
 import chess.pieces.Colour;
+import chess.pieces.Knight;
+import chess.pieces.Piece;
 import chess.pieces.Position;
+import chess.pieces.Queen;
 import chess.pieces.move.KingSideCastle;
 import chess.pieces.move.Move;
 import chess.pieces.move.QueenSideCastle;
+import chess.pieces.move.ReplacePawn;
 import chess.pieces.move.SimpleMove;
 
 public class TestMoveParser {
+
+	@Test
+	public void parsesPawnReplacementMove() {
+		final MoveParser parser = new MoveParser();
+		assertThat(parser.parse("a8-Q"), equalTo(replacePawn(at(1, 8), new Queen(WHITE, at(1, 8)))));
+		assertThat(parser.parse("d1-k"), equalTo(replacePawn(at(4, 1), new Knight(BLACK, at(4, 1)))));
+	}
+
+	private Move replacePawn(final Position position, final Piece piece) {
+		return new ReplacePawn(position, piece);
+	}
 
 	@Test
 	public void pawnReplacementMoveIsValid() {
@@ -74,6 +89,10 @@ public class TestMoveParser {
 	public void simpleMoveIsValid() {
 		final MoveParser parser = new MoveParser();
 		assertThat(parser.isValid("e2-e4"), equalTo(true));
+	}
+
+	private Position at(final int column, final int row) {
+		return new Position(column, row);
 	}
 
 	private Position to(final int column, final int row) {
