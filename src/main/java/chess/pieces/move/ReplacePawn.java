@@ -41,6 +41,9 @@ public class ReplacePawn implements Move {
 		if (pieceIsNotAPawn(board)) {
 			return true;
 		}
+		if (pieceIsWrongColour(board, colour)) {
+			return true;
+		}
 		if (replacementPieceInvalid(board)) {
 			return true;
 		}
@@ -48,6 +51,11 @@ public class ReplacePawn implements Move {
 			return true;
 		}
 		return false;
+	}
+
+	private boolean pieceIsWrongColour(final Board board, final Colour colour) {
+		final Colour pieceColour = board.pieceAt(position).colour();
+		return ! pieceColour.equals(colour);
 	}
 
 	private boolean pawnNotAtEnd(final Board board) {
