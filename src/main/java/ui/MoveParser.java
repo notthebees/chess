@@ -1,8 +1,12 @@
 package ui;
 
+import static chess.pieces.Colour.BLACK;
+import static chess.pieces.Colour.WHITE;
 import static java.lang.Character.getNumericValue;
 import chess.pieces.Position;
+import chess.pieces.move.KingSideCastle;
 import chess.pieces.move.Move;
+import chess.pieces.move.QueenSideCastle;
 import chess.pieces.move.SimpleMove;
 
 public class MoveParser {
@@ -15,13 +19,36 @@ public class MoveParser {
 	}
 
 	public Move parse(final String input) {
-		if (input.contains("-")) {
-			final String[] positions = input.split("-");
-			final String from = positions[0];
-			final String to = positions[1];
-			return new SimpleMove(position(from), position(to));
+		final String[] substrings = input.split("-");
+		final String from = substrings[0];
+		final String to = substrings[1];
+		if (to.equals("0")) {
+			return parseKingsideCastle(from);
 		}
-		return null;
+		if (to.equals("00")) {
+			return parseQueenSideCastle(from);
+		}
+		return new SimpleMove(position(from), position(to));
+	}
+
+	private Move parseQueenSideCastle(final String from) {
+		if (from.equals("e1")) {
+			return new QueenSideCastle(WHITE);
+		} else if (from.equals("e8")) {
+			return new QueenSideCastle(BLACK);
+		} else {
+			return null;
+		}
+	}
+
+	private Move parseKingsideCastle(final String from) {
+		if (from.equals("e1")) {
+			return new KingSideCastle(WHITE);
+		} else if (from.equals("e8")) {
+			return new KingSideCastle(BLACK);
+		} else {
+			return null;
+		}
 	}
 
 	private Position position(final String string) {
