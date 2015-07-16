@@ -47,22 +47,25 @@ public class KingSideCastle implements Move {
 	}
 
 	@Override
-	public boolean isIllegal(final Colour colour, final Board board) {
-		if (piecesNotInPosition(colour, board)) {
+	public boolean isIllegal(final Colour toMove, final Board board) {
+		if (! toMove.equals(colour)) {
 			return true;
 		}
-		final Piece king = board.pieceAt(colour.kingPosition());
-		final Piece rook = board.pieceAt(colour.kingSideRookPosition());
+		if (piecesNotInPosition(board)) {
+			return true;
+		}
+		final Piece king = board.pieceAt(toMove.kingPosition());
+		final Piece rook = board.pieceAt(toMove.kingSideRookPosition());
 		if (king.hasMoved() | rook.hasMoved()) {
 			return true;
 		}
-		if (interveningSpacesOccupied(board)) {
+		if (interveningPositionsOccupied(board)) {
 			return true;
 		}
 		if (board.isInCheck(colour)) {
 			return true;
 		}
-		if (interveningSpacesAttacked(board)) {
+		if (interveningPositionsAttacked(board)) {
 			return true;
 		}
 		if (board.pawnToReplace()) {
@@ -71,31 +74,31 @@ public class KingSideCastle implements Move {
 		return false;
 	}
 
-	private boolean piecesNotInPosition(final Colour colour2, final Board board) {
-		if (! (relevantPositionsOccupied(colour, board))) {
+	private boolean piecesNotInPosition(final Board board) {
+		if (! (relevantPositionsOccupied(board))) {
 			return true;
 		}
-		if (! correctPiecesInPosition(colour, board)) {
+		if (! correctPiecesInPosition(board)) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean correctPiecesInPosition(final Colour colour, final Board board) {
+	private boolean correctPiecesInPosition(final Board board) {
 		final Piece kingPositionPiece = board.pieceAt(colour.kingPosition());
 		final Piece rookPositionPiece = board.pieceAt(colour.kingSideRookPosition());
 		return kingPositionPiece.getClass().equals(King.class) & rookPositionPiece.getClass().equals(Rook.class);
 	}
 
-	private boolean relevantPositionsOccupied(final Colour colour, final Board board) {
+	private boolean relevantPositionsOccupied(final Board board) {
 		return board.isOccupiedAt(colour.kingPosition()) & board.isOccupiedAt(colour.kingSideRookPosition());
 	}
 
-	private boolean interveningSpacesOccupied(final Board board) {
+	private boolean interveningPositionsOccupied(final Board board) {
 		return board.isOccupiedAt(kingDestination()) | board.isOccupiedAt(rookDestination());
 	}
 
-	private boolean interveningSpacesAttacked(final Board board) {
+	private boolean interveningPositionsAttacked(final Board board) {
 		return board.isAttackedBy(colour.opposite(), kingDestination())
 				| board.isAttackedBy(colour.opposite(), rookDestination());
 	}

@@ -26,10 +26,20 @@ public class TestKingSideCastle {
 	private final Piece whiteRook = new Rook(WHITE, WHITE.kingSideRookPosition());
 
 	@Test
+	public void cannotMoveIfWrongColour() {
+		final KingSideCastle move = new KingSideCastle(WHITE);
+		final Board board = board()
+				.withPieces(whiteKing, whiteRook)
+				.build();
+
+		assertThat(move.isIllegal(BLACK, board), equalTo(true));
+	}
+
+	@Test
 	public void illegalIfWrongPieceInRookPosition() {
 		final KingSideCastle castle = new KingSideCastle(WHITE);
 		final Board board = board()
-				.withPieces(whiteRook, new Rook(WHITE, at(8, 2)), new Queen(WHITE, at(5, 1)))
+				.withPieces(whiteKing, new Rook(WHITE, at(8, 2)), new Queen(WHITE, at(5, 1)))
 				.build();
 		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}

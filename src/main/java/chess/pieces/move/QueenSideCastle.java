@@ -46,8 +46,11 @@ public class QueenSideCastle implements Move {
 	}
 
 	@Override
-	public boolean isIllegal(final Colour colour, final Board board) {
-		if (piecesNotInPosition(colour, board)) {
+	public boolean isIllegal(final Colour toMove, final Board board) {
+		if (! toMove.equals(colour)) {
+			return true;
+		}
+		if (piecesNotInPosition(board)) {
 			return true;
 		}
 		final Piece king = board.pieceAt(colour.kingPosition());
@@ -70,23 +73,23 @@ public class QueenSideCastle implements Move {
 		return false;
 	}
 
-	private boolean piecesNotInPosition(final Colour colour2, final Board board) {
-		if (! (relevantPositionsOccupied(colour, board))) {
+	private boolean piecesNotInPosition(final Board board) {
+		if (! (relevantPositionsOccupied(board))) {
 			return true;
 		}
-		if (! correctPiecesInPosition(colour, board)) {
+		if (! correctPiecesInPosition(board)) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean correctPiecesInPosition(final Colour colour, final Board board) {
+	private boolean correctPiecesInPosition(final Board board) {
 		final Piece kingPositionPiece = board.pieceAt(colour.kingPosition());
 		final Piece rookPositionPiece = board.pieceAt(colour.queenSideRookPosition());
 		return kingPositionPiece.getClass().equals(King.class) & rookPositionPiece.getClass().equals(Rook.class);
 	}
 
-	private boolean relevantPositionsOccupied(final Colour colour, final Board board) {
+	private boolean relevantPositionsOccupied(final Board board) {
 		return board.isOccupiedAt(colour.kingPosition()) & board.isOccupiedAt(colour.queenSideRookPosition());
 	}
 
