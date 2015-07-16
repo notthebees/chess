@@ -14,11 +14,13 @@ public class ScannerInterface implements UserInterface {
 	private final Scanner scanner;
 	private final Output out;
 	private final Game game;
+	private boolean gameOver;
 
 	public ScannerInterface(final Game game, final Output out) {
 		scanner = new Scanner(System.in);
 		this.out = out;
 		this.game = game;
+		gameOver = false;
 	}
 
 	@Override
@@ -28,7 +30,7 @@ public class ScannerInterface implements UserInterface {
 		print("Enter move:");
 		final String input = scanner.next();
 		if (input.equals("quit")) {
-			System.exit(0);
+			gameOver = true;
 		}
 		if (input.contains("-")) {
 			final String[] positions = input.split("-");
@@ -42,6 +44,11 @@ public class ScannerInterface implements UserInterface {
 		final int column = string.charAt(0) - 'a' + 1;
 		final int row = getNumericValue(string.charAt(1));
 		return new Position(column, row);
+	}
+
+	@Override
+	public boolean gameOver() {
+		return gameOver;
 	}
 
 	private void print(final String message) {
