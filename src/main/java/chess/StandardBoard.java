@@ -21,14 +21,16 @@ public class StandardBoard implements Board {
 
 	private final Set<Piece> pieces = new HashSet<>();
 	private final Colour toMove;
+	private final boolean pawnToReplace;
 
-	public StandardBoard(final Collection<Piece> pieces, final Colour toMove) {
+	public StandardBoard(final Collection<Piece> pieces, final Colour toMove, final boolean pawnToReplace) {
 		this.pieces.addAll(pieces);
 		this.toMove = toMove;
+		this.pawnToReplace = pawnToReplace;
 	}
 
 	public StandardBoard(final Collection<Piece> pieces) {
-		this(pieces, WHITE);
+		this(pieces, WHITE, false);
 	}
 
 	public StandardBoard(final Piece...pieces) {
@@ -40,7 +42,16 @@ public class StandardBoard implements Board {
 		if (move.isIllegal(toMove, this)) {
 			return this;
 		}
-		return new StandardBoard(move.updatePieces(this), toMove.opposite());
+		return updatedBoard(move.updatePieces(this));
+	}
+
+	private StandardBoard updatedBoard(final Set<Piece> updatedPieces) {
+		for (final Piece piece : updatedPieces) {
+			if (piece.requiresReplacement()) {
+				return new StandardBoard(updatedPieces, toMove, true);
+			}
+		}
+		return new StandardBoard(updatedPieces, toMove.opposite(), false);
 	}
 
 	@Override
@@ -117,6 +128,11 @@ public class StandardBoard implements Board {
 	@Override
 	public Set<Piece> pieces() {
 		return new HashSet<>(pieces);
+	}
+
+	@Override
+	public boolean pawnToReplace() {
+		return pawnToReplace;
 	}
 
 	@Override

@@ -19,6 +19,13 @@ import chess.pieces.move.SimpleMove;
 public class TestStandardBoard {
 
 	@Test
+	public void ifPawnRequiresReplacingReturnsBoardInAppropriateState() {
+		final StandardBoard board = board().withPiece(new Pawn(WHITE, at(1, 7))).build();
+		final StandardBoard updatedBoard = board.play(new SimpleMove(from(1, 7), to(1, 8)));
+		assertThat(updatedBoard.pawnToReplace(), equalTo(true));
+	}
+
+	@Test
 	public void saysIfSpecificColourIsInCheck() {
 		final StandardBoard board = board().withPieces(
 				new King(WHITE, at(3, 4)),

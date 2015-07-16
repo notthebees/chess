@@ -19,5 +19,6 @@ public interface Board {
 	boolean isAttackedBy(Colour colour, Position position);
 	boolean isInCheck(Colour colour);
 	String print();
+	boolean pawnToReplace();
 
 }
