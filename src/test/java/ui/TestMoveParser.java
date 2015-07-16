@@ -17,6 +17,13 @@ import chess.pieces.move.SimpleMove;
 public class TestMoveParser {
 
 	@Test
+	public void pawnReplacementMoveIsValid() {
+		final MoveParser parser = new MoveParser();
+		assertThat(parser.isValid("a8-Q"), equalTo(true));
+		assertThat(parser.isValid("d1-k"), equalTo(true));
+	}
+
+	@Test
 	public void someInvalidMoves() {
 		final MoveParser parser = new MoveParser();
 		assertThat(parser.isValid("e2e4"), equalTo(false));
@@ -25,6 +32,8 @@ public class TestMoveParser {
 		assertThat(parser.isValid("a0-a2"), equalTo(false));
 		assertThat(parser.isValid("a1-a"), equalTo(false));
 		assertThat(parser.isValid("a1-a2-a3"), equalTo(false));
+		assertThat(parser.isValid("a6-Q"), equalTo(false));
+		assertThat(parser.isValid("a8-K"), equalTo(false));
 	}
 
 	@Test

@@ -16,6 +16,7 @@ public class MoveParser {
 	private final String simpleMovePattern = "[a-h][1-8]-[a-h][1-8]";
 	private final String kingsideCastlePattern = "[1|8]-0";
 	private final String queensideCastlePattern = "[1|8]-00";
+	private final String pawnReplacementPattern = "[a-h][1|8]-[Q|r|b|k]";
 
 	public boolean isValid(final String input) {
 		if (matches(simpleMovePattern, input)) {
@@ -25,6 +26,9 @@ public class MoveParser {
 			return true;
 		}
 		if (matches(queensideCastlePattern, input)) {
+			return true;
+		}
+		if (matches(pawnReplacementPattern, input)) {
 			return true;
 		}
 		return false;
