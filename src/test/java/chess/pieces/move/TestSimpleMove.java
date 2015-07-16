@@ -19,6 +19,16 @@ import chess.pieces.Queen;
 public class TestSimpleMove {
 
 	@Test
+	public void checksIfThereIsAPieceAtTheFromPosition() {
+		final SimpleMove move = new SimpleMove(from(5, 1), to(8, 1));
+		final StandardBoard board = board()
+				.withPiece(new Pawn(WHITE, at(6,1)))
+				.build();
+
+		assertThat(move.isIllegal(board), equalTo(true));
+	}
+
+	@Test
 	public void removesCapturedPieceFromBoard() {
 		final SimpleMove move = new SimpleMove(from(5, 1), to(8, 1));
 
