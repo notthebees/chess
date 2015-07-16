@@ -7,8 +7,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import chess.Board;
 import chess.pieces.Colour;
+import chess.pieces.King;
 import chess.pieces.Piece;
 import chess.pieces.Position;
+import chess.pieces.Rook;
 
 public class KingSideCastle implements Move {
 
@@ -46,6 +48,9 @@ public class KingSideCastle implements Move {
 
 	@Override
 	public boolean isIllegal(final Colour colour, final Board board) {
+		if (piecesNotInPosition(colour, board)) {
+			return true;
+		}
 		final Piece king = board.pieceAt(colour.kingPosition());
 		final Piece rook = board.pieceAt(colour.kingSideRookPosition());
 		if (king.hasMoved() | rook.hasMoved()) {
@@ -64,6 +69,26 @@ public class KingSideCastle implements Move {
 			return true;
 		}
 		return false;
+	}
+
+	private boolean piecesNotInPosition(final Colour colour2, final Board board) {
+		if (! (relevantPositionsOccupied(colour, board))) {
+			return true;
+		}
+		if (! correctPiecesInPosition(colour, board)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean correctPiecesInPosition(final Colour colour, final Board board) {
+		final Piece kingPositionPiece = board.pieceAt(colour.kingPosition());
+		final Piece rookPositionPiece = board.pieceAt(colour.kingSideRookPosition());
+		return kingPositionPiece.getClass().equals(King.class) & rookPositionPiece.getClass().equals(Rook.class);
+	}
+
+	private boolean relevantPositionsOccupied(final Colour colour, final Board board) {
+		return board.isOccupiedAt(colour.kingPosition()) & board.isOccupiedAt(colour.kingSideRookPosition());
 	}
 
 	private boolean interveningSpacesOccupied(final Board board) {
