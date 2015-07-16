@@ -12,11 +12,35 @@ import chess.ChessGame;
 import chess.Game;
 import chess.StandardBoardBuilder;
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Position;
+import chess.pieces.Queen;
 import chess.pieces.move.Move;
+import chess.pieces.move.ReplacePawn;
 import chess.pieces.move.SimpleMove;
 
 public class TestIntegration {
+
+	@Test
+	public void pawnReplacementScenario() {
+		final Game game = new ChessGame(
+				board()
+				.withPieces(
+						new King(WHITE, at(5, 1)), new King(BLACK, at(4, 7)), new Pawn(WHITE, at(1, 7)))
+				.build());
+
+		game.play(move(from(1, 7), to(1, 8)));
+		game.play(move(from(4, 7), to(5, 7)));
+		game.play(move(from(5, 1), to(6, 2)));
+		game.play(new ReplacePawn(at(1, 8), new Queen(WHITE, at(1, 8))));
+
+		final Board finalBoard = board()
+				.withPieces(
+						new King(WHITE, at(5, 1)), new King(BLACK, at(4, 7)), new Queen(WHITE, at(1, 8)))
+				.build();
+
+		assertThat(game.currentBoard(), equalTo(finalBoard));
+	}
 
 	@Test
 	public void gameWithSomeMovesPlayedOutOfTurn() {
