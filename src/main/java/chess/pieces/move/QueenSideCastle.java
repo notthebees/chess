@@ -41,10 +41,6 @@ public class QueenSideCastle implements Move {
 		pieces.remove(rook);
 	}
 
-	private Position kingDestination() {
-		return new Position(colour.backRow()+2*colour.forwardStep(), colour.backRow());
-	}
-
 	@Override
 	public boolean isIllegal(final Colour toMove, final Board board) {
 		if (! toMove.equals(colour)) {
@@ -119,8 +115,12 @@ public class QueenSideCastle implements Move {
 		return interveningPositions;
 	}
 
+	private Position kingDestination() {
+		return new Position(3, colour.backRow());
+	}
+
 	private Position rookDestination() {
-		return new Position(colour.backRow()+3*colour.forwardStep(), colour.backRow());
+		return new Position(4, colour.backRow());
 	}
 
 	@Override

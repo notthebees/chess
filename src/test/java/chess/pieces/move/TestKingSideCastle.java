@@ -26,6 +26,21 @@ public class TestKingSideCastle {
 	private final Piece whiteRook = new Rook(WHITE, WHITE.kingSideRookPosition());
 
 	@Test
+	public void blackPiecesPlacedCorrectly() {
+		Board board = board()
+				.withPieces(new King(BLACK, at(5, 8)), new Rook(BLACK, at(8, 8)), new Pawn(WHITE, at(1, 2)))
+				.build();
+		board = board.play(new SimpleMove(from(1, 2), to(1, 3)));
+
+		final Board finalBoard = board()
+				.withPieces(new King(BLACK, at(7, 8)), new Rook(BLACK, at(6, 8)), new Pawn(WHITE, at(1, 3)))
+				.build();
+
+		assertThat(board.play(new KingSideCastle(BLACK)),
+				equalTo(finalBoard));
+	}
+
+	@Test
 	public void cannotMoveIfWrongColour() {
 		final KingSideCastle move = new KingSideCastle(WHITE);
 		final Board board = board()
