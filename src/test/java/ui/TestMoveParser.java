@@ -17,12 +17,23 @@ import chess.pieces.move.SimpleMove;
 public class TestMoveParser {
 
 	@Test
+	public void someInvalidMoves() {
+		final MoveParser parser = new MoveParser();
+		assertThat(parser.isValid("e2e4"), equalTo(false));
+		assertThat(parser.isValid("0-00"), equalTo(false));
+		assertThat(parser.isValid("11-a2"), equalTo(false));
+		assertThat(parser.isValid("a0-a2"), equalTo(false));
+		assertThat(parser.isValid("a1-a"), equalTo(false));
+		assertThat(parser.isValid("a1-a2-a3"), equalTo(false));
+	}
+
+	@Test
 	public void parsesCastlingMove() {
 		final MoveParser parser = new MoveParser();
-		assertThat(parser.parse("e1-0"), equalTo(kingSideCastle(WHITE)));
-		assertThat(parser.parse("e8-0"), equalTo(kingSideCastle(BLACK)));
-		assertThat(parser.parse("e1-00"), equalTo(queenSideCastle(WHITE)));
-		assertThat(parser.parse("e8-00"), equalTo(queenSideCastle(BLACK)));
+		assertThat(parser.parse("1-0"), equalTo(kingSideCastle(WHITE)));
+		assertThat(parser.parse("8-0"), equalTo(kingSideCastle(BLACK)));
+		assertThat(parser.parse("1-00"), equalTo(queenSideCastle(WHITE)));
+		assertThat(parser.parse("8-00"), equalTo(queenSideCastle(BLACK)));
 	}
 
 	private Move queenSideCastle(final Colour colour) {
@@ -36,8 +47,8 @@ public class TestMoveParser {
 	@Test
 	public void castlingMoveIsValid() {
 		final MoveParser parser = new MoveParser();
-		assertThat(parser.isValid("e1-0"), equalTo(true));
-		assertThat(parser.isValid("e8-00"), equalTo(true));
+		assertThat(parser.isValid("1-0"), equalTo(true));
+		assertThat(parser.isValid("8-00"), equalTo(true));
 	}
 
 	@Test
@@ -48,12 +59,6 @@ public class TestMoveParser {
 
 	private Move simpleMove(final Position from, final Position to) {
 		return new SimpleMove(from, to);
-	}
-
-	@Test
-	public void someInvalidMoves() {
-		final MoveParser parser = new MoveParser();
-		assertThat(parser.isValid("e2e4"), equalTo(false));
 	}
 
 	@Test
