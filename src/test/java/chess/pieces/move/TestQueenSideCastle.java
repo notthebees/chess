@@ -17,12 +17,49 @@ import chess.pieces.King;
 import chess.pieces.Pawn;
 import chess.pieces.Piece;
 import chess.pieces.Position;
+import chess.pieces.Queen;
 import chess.pieces.Rook;
 
 public class TestQueenSideCastle {
 
 	private final Piece whiteKing = new King(WHITE, WHITE.kingPosition());
 	private final Piece whiteRook = new Rook(WHITE, WHITE.queenSideRookPosition());
+
+	@Test
+	public void illegalIfWrongPieceInRookPosition() {
+		final QueenSideCastle castle = new QueenSideCastle(WHITE);
+		final Board board = board()
+				.withPieces(whiteRook, new Rook(WHITE, at(8, 2)), new Queen(WHITE, at(5, 1)))
+				.build();
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
+	}
+
+	@Test
+	public void illegalIfWrongPieceInKingPosition() {
+		final QueenSideCastle castle = new QueenSideCastle(WHITE);
+		final Board board = board()
+				.withPieces(new King(WHITE, at(5, 2)), new Queen(WHITE, at(5, 1)), whiteRook)
+				.build();
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
+	}
+
+	@Test
+	public void illegalIfNoPieceInRookPosition() {
+		final QueenSideCastle castle = new QueenSideCastle(WHITE);
+		final Board board = board()
+				.withPieces(whiteRook, new Rook(WHITE, at(8, 2)))
+				.build();
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
+	}
+
+	@Test
+	public void illegalIfNoPieceInKingPosition() {
+		final QueenSideCastle castle = new QueenSideCastle(WHITE);
+		final Board board = board()
+				.withPieces(new King(WHITE, at(5, 2)), whiteRook)
+				.build();
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
+	}
 
 	@Test
 	public void cannotMoveIfPawnNeedsReplacing() {
