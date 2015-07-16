@@ -22,13 +22,25 @@ public class StandardBoard implements Board {
 	private final Set<Piece> pieces = new HashSet<>();
 	private final Colour toMove;
 
-	public StandardBoard(final Collection<Piece> pieces) {
+	public StandardBoard(final Collection<Piece> pieces, final Colour toMove) {
 		this.pieces.addAll(pieces);
-		toMove = WHITE;
+		this.toMove = toMove;
+	}
+
+	public StandardBoard(final Collection<Piece> pieces) {
+		this(pieces, WHITE);
 	}
 
 	public StandardBoard(final Piece...pieces) {
 		this(asList(pieces));
+	}
+
+	@Override
+	public StandardBoard play(final Move move) {
+		if (move.isIllegal(toMove, this)) {
+			return this;
+		}
+		return new StandardBoard(move.updatePieces(this), toMove.opposite());
 	}
 
 	@Override
@@ -108,14 +120,6 @@ public class StandardBoard implements Board {
 	}
 
 	@Override
-	public StandardBoard play(final Move move) {
-		if (move.isIllegal(toMove, this)) {
-			return this;
-		}
-		return new StandardBoard(move.updatePieces(this));
-	}
-
-	@Override
 	public boolean isOccupiedBy(final Colour colour, final Position position) {
 		if (! isOccupiedAt(position)) {
 			return false;
@@ -167,12 +171,21 @@ public class StandardBoard implements Board {
 
 	@Override
 	public boolean equals(final Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+		if (obj instanceof StandardBoard) {
+			final StandardBoard other = (StandardBoard) obj;
+			return new EqualsBuilder()
+			.append(pieces, other.pieces)
+			.isEquals();
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
+		return new HashCodeBuilder()
+		.append(pieces)
+		.toHashCode();
 	}
 
 }

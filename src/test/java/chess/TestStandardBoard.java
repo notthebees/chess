@@ -70,11 +70,11 @@ public class TestStandardBoard {
 
 	@Test
 	public void returnsNewBoardWithMovedPiece() {
-		final StandardBoard board = board().withPiece(new King(BLACK, at(1, 1))).build();
+		final StandardBoard board = board().withPiece(new King(WHITE, at(1, 1))).build();
 
 		final Move move = new SimpleMove(from(1, 1), to(1, 2));
 
-		final Board finalBoard = board().withPiece(new King(BLACK, at(1, 2))).build();
+		final Board finalBoard = board().withPiece(new King(WHITE, at(1, 2))).build();
 		assertThat(board.play(move), equalTo(finalBoard));
 	}
 
