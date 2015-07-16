@@ -2,6 +2,9 @@ package chess.pieces.move;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import chess.Board;
 import chess.pieces.Bishop;
 import chess.pieces.Colour;
@@ -87,6 +90,21 @@ public class ReplacePawn implements Move {
 
 	private boolean pieceIsNotAPawn(final Board board) {
 		return ! board.pieceAt(position).getClass().equals(Pawn.class);
+	}
+
+	@Override
+	public String toString() {
+		return "Pawn replaced with " + replacementPiece + " @ " + position;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 }

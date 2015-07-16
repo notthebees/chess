@@ -3,6 +3,9 @@ package chess.pieces.move;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import chess.Board;
 import chess.pieces.Colour;
 import chess.pieces.Piece;
@@ -87,6 +90,21 @@ public class QueenSideCastle implements Move {
 
 	private Position rookDestination() {
 		return new Position(colour.backRow()+3*colour.forwardStep(), colour.backRow());
+	}
+
+	@Override
+	public String toString() {
+		return colour + " queenside castle";
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 }
