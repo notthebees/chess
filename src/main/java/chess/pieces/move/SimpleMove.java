@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import chess.Board;
 import chess.StandardBoard;
+import chess.pieces.Colour;
 import chess.pieces.Piece;
 import chess.pieces.Position;
 
@@ -40,7 +41,7 @@ public class SimpleMove implements Move {
 	}
 
 	@Override
-	public boolean isIllegal(final Board board) {
+	public boolean isIllegal(final Colour colour, final Board board) {
 		if (! board.isOccupiedAt(from)) {
 			return true;
 		}

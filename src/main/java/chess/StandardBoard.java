@@ -1,5 +1,6 @@
 package chess;
 
+import static chess.pieces.Colour.WHITE;
 import static java.util.Arrays.asList;
 
 import java.util.Collection;
@@ -19,9 +20,11 @@ import chess.pieces.move.Move;
 public class StandardBoard implements Board {
 
 	private final Set<Piece> pieces = new HashSet<>();
+	private final Colour toMove;
 
 	public StandardBoard(final Collection<Piece> pieces) {
 		this.pieces.addAll(pieces);
+		toMove = WHITE;
 	}
 
 	public StandardBoard(final Piece...pieces) {
@@ -106,7 +109,7 @@ public class StandardBoard implements Board {
 
 	@Override
 	public StandardBoard play(final Move move) {
-		if (move.isIllegal(this)) {
+		if (move.isIllegal(toMove, this)) {
 			return this;
 		}
 		return new StandardBoard(move.updatePieces(this));

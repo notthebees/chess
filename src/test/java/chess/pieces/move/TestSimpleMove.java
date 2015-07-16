@@ -22,10 +22,10 @@ public class TestSimpleMove {
 	public void checksIfThereIsAPieceAtTheFromPosition() {
 		final SimpleMove move = new SimpleMove(from(5, 1), to(8, 1));
 		final StandardBoard board = board()
-				.withPiece(new Pawn(WHITE, at(6,1)))
+				.withPiece(new Pawn(WHITE, at(6, 2)))
 				.build();
 
-		assertThat(move.isIllegal(board), equalTo(true));
+		assertThat(move.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class TestSimpleMove {
 				new Queen(WHITE, at(8, 1)))
 				.build();
 
-		assertThat(move.isIllegal(board), equalTo(true));
+		assertThat(move.isIllegal(BLACK, board), equalTo(true));
 	}
 
 	@Test
@@ -65,7 +65,7 @@ public class TestSimpleMove {
 				.withPieces(new Queen(BLACK, at(1, 1)), new King(BLACK, at(4, 4)))
 				.build();
 
-		assertThat(move.isIllegal(board), equalTo(true));
+		assertThat(move.isIllegal(BLACK, board), equalTo(true));
 	}
 
 	@Test
@@ -75,8 +75,8 @@ public class TestSimpleMove {
 		final SimpleMove aMove = new SimpleMove(from(1, 1), to(1, 0));
 		final SimpleMove anotherMove = new SimpleMove(from(1, 1), to(9, 9));
 
-		assertThat(aMove.isIllegal(board), equalTo(true));
-		assertThat(anotherMove.isIllegal(board), equalTo(true));
+		assertThat(aMove.isIllegal(BLACK, board), equalTo(true));
+		assertThat(anotherMove.isIllegal(BLACK, board), equalTo(true));
 	}
 
 	private Position at(final int column, final int row) {

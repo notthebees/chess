@@ -31,7 +31,7 @@ public class ReplacePawn implements Move {
 	}
 
 	@Override
-	public boolean isIllegal(final Board board) {
+	public boolean isIllegal(final Colour colour, final Board board) {
 		if (! board.isOccupiedAt(position)) {
 			return true;
 		}

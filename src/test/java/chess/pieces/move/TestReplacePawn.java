@@ -31,14 +31,14 @@ public class TestReplacePawn {
 	public void moveIllegalIfNoPieceAtPosition() {
 		final ReplacePawn replacePawn = new ReplacePawn(at(1, 8), new Queen(WHITE, at(1, 8)));
 		final Board board = board().withPiece(new Pawn(WHITE, at(1, 7))).build();
-		assertThat(replacePawn.isIllegal(board), equalTo(true));
+		assertThat(replacePawn.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
 	public void cannotReplaceIfPawnNotAtEndRow() {
 		final ReplacePawn replacePawn = new ReplacePawn(at(1, 7), new Queen(WHITE, at(1, 7)));
 		final Board board = board().withPiece(new Pawn(WHITE, at(1, 7))).build();
-		assertThat(replacePawn.isIllegal(board), equalTo(true));
+		assertThat(replacePawn.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -48,23 +48,23 @@ public class TestReplacePawn {
 		final ReplacePawn replaceWithPawn = new ReplacePawn(at(1, 8), new King(WHITE, at(1, 8)));
 		final ReplacePawn replaceWithBlackPiece = new ReplacePawn(at(1, 8), new Queen(BLACK, at(1, 8)));
 
-		assertThat(replaceWithKing.isIllegal(board), equalTo(true));
-		assertThat(replaceWithPawn.isIllegal(board), equalTo(true));
-		assertThat(replaceWithBlackPiece.isIllegal(board), equalTo(true));
+		assertThat(replaceWithKing.isIllegal(WHITE, board), equalTo(true));
+		assertThat(replaceWithPawn.isIllegal(WHITE, board), equalTo(true));
+		assertThat(replaceWithBlackPiece.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
 	public void cannotReplaceIfPieceIsNotAPawn() {
 		final ReplacePawn replacePawn = new ReplacePawn(at(1, 8), new Queen(WHITE, at(1, 8)));
 		final Board board = board().withPiece(new Bishop(WHITE, at(1, 8))).build();
-		assertThat(replacePawn.isIllegal(board), equalTo(true));
+		assertThat(replacePawn.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
 	public void legalIfPawnIsAtEndRowAndReplacementPieceIsValid() {
 		final ReplacePawn replacePawn = new ReplacePawn(at(1, 8), new Queen(WHITE, at(1, 8)));
 		final Board board = board().withPiece(new Pawn(WHITE, at(1, 8))).build();
-		assertThat(replacePawn.isIllegal(board), equalTo(false));
+		assertThat(replacePawn.isIllegal(WHITE, board), equalTo(false));
 	}
 
 	private Position at(final int column, final int row) {

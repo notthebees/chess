@@ -41,7 +41,7 @@ public class QueenSideCastle implements Move {
 	}
 
 	@Override
-	public boolean isIllegal(final Board board) {
+	public boolean isIllegal(final Colour colour, final Board board) {
 		final Piece king = board.pieceAt(colour.kingPosition());
 		final Piece rook = board.pieceAt(colour.queenSideRookPosition());
 		if (king.hasMoved() | rook.hasMoved()) {

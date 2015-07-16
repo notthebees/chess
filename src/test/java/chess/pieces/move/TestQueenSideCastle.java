@@ -29,7 +29,7 @@ public class TestQueenSideCastle {
 		final Board board = board()
 				.withPieces(whiteKing, whiteRook, new Rook(BLACK, new Position(4, 5)))
 				.build();
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class TestQueenSideCastle {
 		final Board board = board()
 				.withPieces(whiteKing, whiteRook, new Rook(BLACK, new Position(5, 5)))
 				.build();
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class TestQueenSideCastle {
 		final Board board = board()
 				.withPieces(whiteKing, whiteRook, new Bishop(BLACK, new Position(4, 1)))
 				.build();
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class TestQueenSideCastle {
 		Board board = board().withPieces(whiteKing, whiteRook).build();
 		board = board.play(new SimpleMove(WHITE.queenSideRookPosition(), new Position(2, 1)));
 		board = board.play(new SimpleMove(new Position(2, 1), WHITE.queenSideRookPosition()));
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -75,14 +75,14 @@ public class TestQueenSideCastle {
 		Board board = board().withPieces(whiteKing, whiteRook).build();
 		board = board.play(new SimpleMove(WHITE.kingPosition(), new Position(5, 2)));
 		board = board.play(new SimpleMove(new Position(5, 2), WHITE.kingPosition()));
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
 	public void canCastleIfThereIsSpaceBetweenQueenAndRook() {
 		final QueenSideCastle castle = new QueenSideCastle(WHITE);
 		final Board board = board().withPieces(whiteKing, whiteRook).build();
-		assertThat(castle.isIllegal(board), equalTo(false));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(false));
 	}
 
 	private StandardBoardBuilder board() {

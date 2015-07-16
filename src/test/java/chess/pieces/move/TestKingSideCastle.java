@@ -29,7 +29,7 @@ public class TestKingSideCastle {
 		final Board board = board()
 				.withPieces(whiteKing, whiteRook, new Bishop(BLACK, at(6, 1)))
 				.build();
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class TestKingSideCastle {
 		final Board board = board()
 				.withPieces(whiteKing, whiteRook, new Rook(BLACK, at(6, 5)))
 				.build();
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class TestKingSideCastle {
 		final Board board = board()
 				.withPieces(whiteKing, whiteRook, new Rook(BLACK, at(5, 5)))
 				.build();
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class TestKingSideCastle {
 		Board board = board().withPieces(whiteKing, whiteRook).build();
 		board = board.play(new SimpleMove(WHITE.kingSideRookPosition(), to(7, 1)));
 		board = board.play(new SimpleMove(from(7, 1), WHITE.kingSideRookPosition()));
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
@@ -75,14 +75,14 @@ public class TestKingSideCastle {
 		Board board = board().withPieces(whiteKing, whiteRook).build();
 		board = board.play(new SimpleMove(WHITE.kingPosition(), to(5, 2)));
 		board = board.play(new SimpleMove(from(5, 2), WHITE.kingPosition()));
-		assertThat(castle.isIllegal(board), equalTo(true));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
 	}
 
 	@Test
 	public void canCastleIfThereIsSpaceBetweenKingAndRook() {
 		final KingSideCastle castle = new KingSideCastle(WHITE);
 		final Board board = board().withPieces(whiteKing, whiteRook).build();
-		assertThat(castle.isIllegal(board), equalTo(false));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(false));
 	}
 
 	private Position from(final int column, final int row) {
