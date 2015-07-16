@@ -19,6 +19,16 @@ import chess.pieces.Queen;
 public class TestSimpleMove {
 
 	@Test
+	public void cannotMoveIfPawnNeedsReplacing() {
+		final SimpleMove move = new SimpleMove(from(1, 5), to(1, 6));
+		Board board = board()
+				.withPieces(new King(WHITE, at(1, 5)), new Pawn(WHITE, at(1, 7)))
+				.build();
+		board = board.play(new SimpleMove(from(1, 7), to(1, 8)));
+		assertThat(move.isIllegal(WHITE, board), equalTo(true));
+	}
+
+	@Test
 	public void checksIfPieceIsCorrectColour() {
 		final SimpleMove move = new SimpleMove(from(6, 2), to(6, 3));
 		final StandardBoard board = board()

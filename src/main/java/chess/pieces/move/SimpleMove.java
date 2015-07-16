@@ -57,6 +57,9 @@ public class SimpleMove implements Move {
 		if (leavesKingInCheck(board)) {
 			return true;
 		}
+		if (board.pawnToReplace()) {
+			return true;
+		}
 		return false;
 	}
 

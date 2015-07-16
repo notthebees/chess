@@ -59,6 +59,9 @@ public class QueenSideCastle implements Move {
 		if (interveningPositionsAttacked(board)) {
 			return true;
 		}
+		if (board.pawnToReplace()) {
+			return true;
+		}
 		return false;
 	}
 

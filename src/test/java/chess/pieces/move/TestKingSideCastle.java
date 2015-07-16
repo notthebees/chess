@@ -25,6 +25,16 @@ public class TestKingSideCastle {
 	private final Piece whiteRook = new Rook(WHITE, WHITE.kingSideRookPosition());
 
 	@Test
+	public void cannotMoveIfPawnNeedsReplacing() {
+		final KingSideCastle castle = new KingSideCastle(WHITE);
+		Board board = board()
+				.withPieces(whiteKing, whiteRook, new Pawn(WHITE, at(1, 7)))
+				.build();
+		board = board.play(new SimpleMove(from(1, 7), to(1, 8)));
+		assertThat(castle.isIllegal(WHITE, board), equalTo(true));
+	}
+
+	@Test
 	public void cannotCastleIfInterveningSpacesAreOccupied() {
 		final KingSideCastle castle = new KingSideCastle(WHITE);
 		final Board board = board()

@@ -60,6 +60,9 @@ public class KingSideCastle implements Move {
 		if (interveningSpacesAttacked(board)) {
 			return true;
 		}
+		if (board.pawnToReplace()) {
+			return true;
+		}
 		return false;
 	}
 
