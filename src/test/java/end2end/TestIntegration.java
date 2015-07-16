@@ -5,7 +5,6 @@ import static chess.pieces.Colour.WHITE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import chess.Board;
@@ -19,7 +18,6 @@ import chess.pieces.move.SimpleMove;
 
 public class TestIntegration {
 
-	@Ignore
 	@Test
 	public void gameWithSomeMovesPlayedOutOfTurn() {
 		final Game game = new ChessGame(
