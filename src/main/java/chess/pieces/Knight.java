@@ -64,6 +64,11 @@ public class Knight implements Piece {
 	}
 
 	@Override
+	public boolean requiresReplacement() {
+		return false;
+	}
+
+	@Override
 	public String print() {
 		return "k" + colour.playerNumber();
 	}

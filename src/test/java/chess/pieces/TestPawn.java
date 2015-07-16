@@ -15,6 +15,14 @@ public class TestPawn {
 	private final Board emptyBoard = board().build();
 
 	@Test
+	public void saysIfItNeedsReplacing() {
+		Pawn pawn = new Pawn(WHITE, at(1, 7));
+		assertThat(pawn.requiresReplacement(), equalTo(false));
+		pawn = pawn.moveTo(position(1, 8));
+		assertThat(pawn.requiresReplacement(), equalTo(true));
+	}
+
+	@Test
 	public void recordsIfItHasMoved() {
 		Pawn pawn = new Pawn(WHITE, at(1, 2));
 		assertThat(pawn.hasMoved(), equalTo(false));

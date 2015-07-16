@@ -11,5 +11,6 @@ public interface Piece {
 	boolean moveIsIllegal(Position position, Board board);
 	boolean hasMoved();
 	String print();
+	boolean requiresReplacement();
 
 }

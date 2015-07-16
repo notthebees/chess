@@ -24,6 +24,14 @@ public class Pawn implements Piece{
 	}
 
 	@Override
+	public boolean requiresReplacement() {
+		if (position.row == colour.endRow()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public boolean hasMoved() {
 		return hasMoved;
 	}

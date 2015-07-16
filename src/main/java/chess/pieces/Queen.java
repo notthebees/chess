@@ -119,6 +119,11 @@ public class Queen implements Piece {
 	}
 
 	@Override
+	public boolean requiresReplacement() {
+		return false;
+	}
+
+	@Override
 	public String print() {
 		return "Q" + colour.playerNumber();
 	}
